@@ -1,7 +1,9 @@
 project(dnkvw CXX)
 
 add_library(${PROJECT_NAME} SHARED
-    src/dnkvwAPI.cpp
+    src/dnkvw.cpp
+    src/dnkvwContext.cpp
+    include/dnkvwContext.hpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include)

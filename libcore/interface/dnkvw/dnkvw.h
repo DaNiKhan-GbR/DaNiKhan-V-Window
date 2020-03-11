@@ -1,6 +1,8 @@
 #ifndef DNKVW_HEADER
 #define DNKVW_HEADER
 
+#include "dnkvwInterface.h"
+
 #ifdef _WIN32
 # ifdef DNKVW_WIN_EXPORT
 #   define DNKVW_API  __declspec( dllexport )
@@ -15,9 +17,12 @@
 extern "C" {
 #endif
 
-DNKVW_API void openVideo();
-DNKVW_API void captureVideoFrame();
-DNKVW_API void stopVideo();
+    DNKVW_API IDnkvwHandle dnkvw_createContext();
+    DNKVW_API void dnkvw_freeContext(IDnkvwHandle* context);
+
+    DNKVW_API int dnkvw_startTracking(IDnkvwHandle context, int cameraId);
+    DNKVW_API void dnkvw_stopTracking(IDnkvwHandle context);
+    DNKVW_API void dnkvw_debugCameraInput(IDnkvwHandle context);
 
 #ifdef __cplusplus
 }

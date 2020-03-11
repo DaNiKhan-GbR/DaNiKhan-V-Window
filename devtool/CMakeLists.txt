@@ -1,6 +1,6 @@
 project(dnkvwtool CXX)
 
-add_executable(${PROJECT_NAME} WIN32
+add_executable(${PROJECT_NAME}
     src/devtool.cpp
 )
 

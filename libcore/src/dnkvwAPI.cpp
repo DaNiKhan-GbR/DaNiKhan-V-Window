@@ -5,20 +5,20 @@ cv::VideoCapture cap;
 
 extern "C" {
 
-    void openVideo()
+    DNKVW_API void openVideo()
     {
         cap.open(0);
         cv::namedWindow("test",cv::WINDOW_AUTOSIZE);  
     }
 
-    void captureVideoFrame()
+    DNKVW_API void captureVideoFrame()
     {
         cv::Mat frame;
         cap >> frame;
         cv::imshow("test", frame);
     }
 
-    void stopVideo()
+    DNKVW_API void stopVideo()
     {
         cap.release();
     }

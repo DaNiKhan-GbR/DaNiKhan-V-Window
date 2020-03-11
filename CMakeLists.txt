@@ -25,6 +25,8 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 find_package(Threads REQUIRED)
+find_package(OpenCV 4.2 REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
 
 add_subdirectory(libcore)
 add_subdirectory(devtool)

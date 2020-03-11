@@ -53,7 +53,12 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     switch (uMsg)
     {
+        case WM_CREATE:
+            openVideo();
+            return 0;
+
         case WM_DESTROY:
+            stopVideo();
             PostQuitMessage(0);
             return 0;
         
@@ -64,11 +69,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
                 FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
 
-                wchar_t buffer[256] = {0};
-                wsprintfW(buffer, L"%d", addNums(3, 4));
-                TextOutW(hdc, 20, 20, buffer, 20);
-
                 EndPaint(hwnd, &ps);
+                captureVideoFrame();
             }
             return 0;
     }

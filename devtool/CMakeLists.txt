@@ -6,4 +6,4 @@ add_executable(${PROJECT_NAME} WIN32
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
-target_link_libraries(${PROJECT_NAME} dnkvw)
+target_link_libraries(${PROJECT_NAME} dnkvw ${OpenCV_LIBS})

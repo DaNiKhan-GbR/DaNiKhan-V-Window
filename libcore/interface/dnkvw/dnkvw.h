@@ -15,7 +15,9 @@
 extern "C" {
 #endif
 
-DNKVW_API int addNums(int a, int b);
+DNKVW_API void openVideo();
+DNKVW_API void captureVideoFrame();
+DNKVW_API void stopVideo();
 
 #ifdef __cplusplus
 }

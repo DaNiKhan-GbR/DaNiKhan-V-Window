@@ -15,6 +15,7 @@ int main()
         std::cout << "1) Start Tracking\n";
         std::cout << "2) Stop Tracking\n";
         std::cout << "3) DEBUG: Show video stream\n";
+        std::cout << "4) DEBUG: Show face tracking\n";
         std::cout << "q) Quit\n";
 
         char input;
@@ -39,6 +40,12 @@ int main()
             case '3':
                 std::cout << "Open DEBUG Window: Camera Input.\nPress any key to exit.\n";
                 dnkvw->debugCameraInput();
+                std::cout << "Window closed.\n";
+                break;
+            
+            case '4':
+                std::cout << "Open DEBUG Window: Face Tracking.\nPress any key to exit.\n";
+                dnkvw->debugCameraFace();
                 std::cout << "Window closed.\n";
                 break;
             

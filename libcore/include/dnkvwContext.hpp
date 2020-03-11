@@ -13,6 +13,7 @@ namespace dnkvw
         void stopTracking();
 
         void debugCameraInput();
+        void debugCameraFace();
 
         private:
             cv::VideoCapture m_videoCapture;

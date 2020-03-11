@@ -9,6 +9,7 @@ struct IDnkvwContext
     virtual void stopTracking() = 0;
 
     virtual void debugCameraInput() = 0;
+    virtual void debugCameraFace() = 0;
 };
 
 typedef IDnkvwContext* IDnkvwHandle;

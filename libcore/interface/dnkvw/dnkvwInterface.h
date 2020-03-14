@@ -10,6 +10,7 @@ struct IDnkvwContext
 
     virtual void debugCameraInput() = 0;
     virtual void debugCameraFace() = 0;
+    virtual void debugCameraFaceDNN() = 0;
 };
 
 typedef IDnkvwContext* IDnkvwHandle;

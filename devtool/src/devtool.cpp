@@ -40,6 +40,7 @@ int main()
 
             case '2':
             {
+                dnkvw->selectHaarTracker();
                 std::cout << "Starting Tracking...\t\t";
                 bool ok = dnkvw->startTracking(0);
                 std::cout << (ok ? "OK.\n" : "Error!\n");
@@ -56,12 +57,13 @@ int main()
 
             case '3':
             {
+                dnkvw->selectDnnTracker();
                 std::cout << "Starting Tracking...\t\t";
                 bool ok = dnkvw->startTracking(0);
                 std::cout << (ok ? "OK.\n" : "Error!\n");
 
                 std::cout << "Open DEBUG Window: Face Tracking DNN.\nPress any key to exit.\n";
-                dnkvw->debugCameraFaceDNN();
+                dnkvw->debugCameraFace();
                 std::cout << "Window closed.\n";
 
                 std::cout << "Stopping Tracking...\t\t";

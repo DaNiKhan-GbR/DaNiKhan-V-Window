@@ -4,6 +4,14 @@ add_library(${PROJECT_NAME} SHARED
     src/dnkvw.cpp
     src/dnkvwContext.cpp
     include/dnkvwContext.hpp
+    include/constants.hpp
+    include/tracker.hpp
+    src/haarTracker.cpp
+    include/haarTracker.hpp
+    src/dnnTracker.cpp
+    include/dnnTracker.hpp
+    src/fpsTimer.cpp
+    include/fpsTimer.hpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include)

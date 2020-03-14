@@ -20,9 +20,14 @@ extern "C" {
     DNKVW_API IDnkvwHandle dnkvw_createContext();
     DNKVW_API void dnkvw_freeContext(IDnkvwHandle* context);
 
+    DNKVW_API void dnkvw_selectHaarTracker(IDnkvwHandle context);
+    DNKVW_API void dnkvw_selectDnnTracker(IDnkvwHandle context);
+
     DNKVW_API int dnkvw_startTracking(IDnkvwHandle context, int cameraId);
     DNKVW_API void dnkvw_stopTracking(IDnkvwHandle context);
+
     DNKVW_API void dnkvw_debugCameraInput(IDnkvwHandle context);
+    DNKVW_API void dnkvw_debugCameraFace(IDnkvwHandle context);
 
 #ifdef __cplusplus
 }

@@ -12,6 +12,8 @@ add_library(${PROJECT_NAME} SHARED
     include/dnnTracker.hpp
     src/fpsTimer.cpp
     include/fpsTimer.hpp
+    src/vec3.cpp
+    include/vec3.hpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include)

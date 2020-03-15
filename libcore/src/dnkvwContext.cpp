@@ -7,10 +7,6 @@
 #include <cmath>
 #include <cstring>
 
-// TODO: Remove
-#include <iostream>
-#include <filesystem>
-
 using dnkvw::CDnkvwContext;
 
 void CDnkvwContext::__init()
@@ -166,7 +162,7 @@ void CDnkvwContext::debugCameraInput()
         float fps = m_fpsTimer->stop();
 
         char buffer[40] = { 0 };
-        sprintf_s(buffer, "FPS: %.1f", fps);
+        snprintf(buffer, 40, "FPS: %.1f", fps);
         cv::putText(frame, buffer, cv::Point(20, 40), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 255, 0));
 
         cv::imshow(WINDOW_NAME, frame);
@@ -178,6 +174,7 @@ void CDnkvwContext::debugCameraInput()
     }
 
     cv::destroyWindow(WINDOW_NAME);
+    cv::waitKey(1); // Force closing window on mac
 }
 
 void CDnkvwContext::debugCameraFace()
@@ -211,7 +208,7 @@ void CDnkvwContext::debugCameraFace()
         float fps = m_fpsTimer->stop();
 
         char buffer[40] = { 0 };
-        sprintf_s(buffer, "FPS: %.1f", fps);
+        snprintf(buffer, 40, "FPS: %.1f", fps);
         cv::putText(frame, buffer, cv::Point(20, 40), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 255, 0));
 
         cv::imshow(WINDOW_NAME, frame);
@@ -223,5 +220,6 @@ void CDnkvwContext::debugCameraFace()
     }
 
     cv::destroyWindow(WINDOW_NAME);
+    cv::waitKey(1); // Force closing window on mac
 }
 

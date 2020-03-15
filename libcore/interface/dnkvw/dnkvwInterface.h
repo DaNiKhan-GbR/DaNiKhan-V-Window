@@ -5,6 +5,8 @@
 
 struct IDnkvwContext 
 {
+    virtual ~IDnkvwContext() {}
+
     virtual void __init() = 0;
     virtual void __cleanup() = 0;
 

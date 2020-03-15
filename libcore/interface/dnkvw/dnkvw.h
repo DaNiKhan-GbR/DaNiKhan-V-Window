@@ -26,6 +26,8 @@ extern "C" {
     DNKVW_API int dnkvw_startTracking(IDnkvwHandle context, int cameraId);
     DNKVW_API void dnkvw_stopTracking(IDnkvwHandle context);
 
+    DNKVW_API void dnkvw_loadFrustum(IDnkvwHandle context, float near, float *left, float *right, float *top, float *bottom);
+
     DNKVW_API void dnkvw_debugCameraInput(IDnkvwHandle context);
     DNKVW_API void dnkvw_debugCameraFace(IDnkvwHandle context);
 

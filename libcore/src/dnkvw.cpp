@@ -40,6 +40,11 @@ extern "C" {
         context->stopTracking();
     }
 
+    DNKVW_API void dnkvw_loadFrustum(IDnkvwHandle context, float near, float *left, float *right, float *top, float *bottom)
+    {
+        context->loadFrustum(near, left, right, top, bottom);
+    }
+
     DNKVW_API void dnkvw_debugCameraInput(IDnkvwHandle context)
     {
         context->debugCameraInput();

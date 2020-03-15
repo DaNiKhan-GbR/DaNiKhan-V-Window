@@ -1,8 +1,8 @@
 #include "dnkvwContext.hpp"
 #include "constants.hpp"
-
 #include "haarTracker.hpp"
 #include "dnnTracker.hpp"
+#include "vec3.hpp"
 
 #include <cmath>
 #include <cstring>
@@ -93,6 +93,54 @@ bool CDnkvwContext::startTracking(int cameraId)
 void CDnkvwContext::stopTracking()
 {
     m_videoCapture.release();
+}
+
+void CDnkvwContext::loadFrustum(float near, float *left, float *right, float *top, float *bottom)
+{
+    if (!m_videoCapture.isOpened())
+    {
+        return;
+    }
+
+    cv::Mat frame;
+    m_videoCapture >> frame;
+    std::vector<cv::Rect> faces = m_tracker->trackFrame(frame);
+
+    if (faces.size() > 0)
+    {
+        cv::Rect face = faces[0];
+
+        // TODO too hard for an good approx.
+        float eyeX = ((float)(face.x + face.width / 2.0f)) / ((float)frame.cols) * 2.0f - 1.0f;
+        float eyeY = ((float)(face.y + face.width / 4.0f)) / ((float)frame.rows) * 2.0f - 1.0f; 
+        float eyeZ = 100.0f / (float)face.width;
+
+        Vec3 pa(-1, -1, 0);
+        Vec3 pb( 1, -1, 0);
+        Vec3 pc(-1,  1, 0);
+        Vec3 pe(eyeX, -eyeY, eyeZ);
+
+        Vec3 vr = (pb - pa).norm();
+        Vec3 vu = (pc - pa).norm();
+        Vec3 vn = vr.cross(vu).norm();
+
+        Vec3 va = pa - pe;
+        Vec3 vb = pb - pe;
+        Vec3 vc = pc - pe;
+
+        float d = -(vn * va);
+        float nearOverD = near / d;
+
+        float l = (vr * va) * nearOverD;
+        float r = (vr * vb) * nearOverD;
+        float b = (vu * va) * nearOverD;
+        float t = (vu * vc) * nearOverD;
+
+        *left = l;
+        *right = r;
+        *bottom = b;
+        *top = t;
+    }
 }
 
 void CDnkvwContext::debugCameraInput()

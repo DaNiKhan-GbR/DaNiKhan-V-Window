@@ -7,7 +7,12 @@ using dnkvw::CDnnTracker;
 bool CDnnTracker::init()
 {
     // TODO Read from memory instead of file
-    m_dnnNet = cv::dnn::readNetFromCaffe("./data/deploy.prototxt", "./data/res10_300x300_ssd_iter_140000_fp16.caffemodel");
+    try {
+        m_dnnNet = cv::dnn::readNetFromCaffe("./data/deploy.prototxt", "./data/res10_300x300_ssd_iter_140000_fp16.caffemodel");
+    } catch (cv::Exception& e) {
+        std::cerr << "Couldn't load DNN data: " << e.msg << "\n";
+        return false;
+    }
 
     return true;
 }

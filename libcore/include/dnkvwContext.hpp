@@ -21,6 +21,8 @@ namespace dnkvw
             bool startTracking(int cameraId);
             void stopTracking();
 
+            void loadFrustum(float near, float *left, float *right, float *top, float *bottom);
+
             void debugCameraInput();
             void debugCameraFace();
 

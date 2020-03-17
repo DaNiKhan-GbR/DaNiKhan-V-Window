@@ -1,4 +1,5 @@
 #include "dnnTracker.hpp"
+#include "resources.hpp"
 
 #include <iostream>
 
@@ -6,9 +7,13 @@ using dnkvw::CDnnTracker;
 
 bool CDnnTracker::init()
 {
-    // TODO Read from memory instead of file
+    auto fs = cmrc::dnkvw_rc::get_filesystem();
+    
+    auto prototxt = fs.open("data/dnn.prototxt");
+    auto caffemodel = fs.open("data/dnn.caffemodel");
+    
     try {
-        m_dnnNet = cv::dnn::readNetFromCaffe("./data/deploy.prototxt", "./data/res10_300x300_ssd_iter_140000_fp16.caffemodel");
+        m_dnnNet = cv::dnn::readNetFromCaffe(prototxt.cbegin(), prototxt.size(), caffemodel.cbegin(), caffemodel.size());
     } catch (cv::Exception& e) {
         std::cerr << "Couldn't load DNN data: " << e.msg << "\n";
         return false;

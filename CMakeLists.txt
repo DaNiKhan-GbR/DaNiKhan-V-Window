@@ -24,14 +24,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
+include(CMakeRC.cmake)
 find_package(Threads REQUIRED)
 find_package(OpenCV 4.2 REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 add_subdirectory(libcore)
 add_subdirectory(devtool)
-
-# Todo: Find a better way
-file(COPY ${CMAKE_SOURCE_DIR}/data DESTINATION ${CMAKE_BINARY_DIR})
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT dnkvwtool)

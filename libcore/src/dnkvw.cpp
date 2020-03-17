@@ -40,6 +40,11 @@ extern "C" {
         context->stopTracking();
     }
 
+    DNKVW_API void dnkvw_calibrate(IDnkvwHandle context)
+    {
+        context->calibrate();
+    }
+
     DNKVW_API void dnkvw_loadFrustum(IDnkvwHandle context, float near, float *left, float *right, float *top, float *bottom)
     {
         context->loadFrustum(near, left, right, top, bottom);

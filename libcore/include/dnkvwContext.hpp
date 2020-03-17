@@ -5,6 +5,7 @@
 
 #include "tracker.hpp"
 #include "fpsTimer.hpp"
+#include "vec3.hpp"
 
 namespace dnkvw 
 {
@@ -21,6 +22,7 @@ namespace dnkvw
             bool startTracking(int cameraId);
             void stopTracking();
 
+            void calibrate();
             void loadFrustum(float near, float *left, float *right, float *top, float *bottom);
 
             void debugCameraInput();
@@ -32,6 +34,8 @@ namespace dnkvw
             cv::VideoCapture m_videoCapture;
             ITracker *m_tracker;
             CFpsTimer *m_fpsTimer;
+
+            Vec3 m_eyeOffset;
     };
 
 }

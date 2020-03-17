@@ -22,13 +22,19 @@ bool CHaarTracker::init()
     return true;
 }
 
-std::vector<cv::Rect> CHaarTracker::trackFrame(cv::Mat& inputFrame)
+std::optional<cv::Rect> CHaarTracker::trackFrame(cv::Mat& inputFrame)
 {
     std::vector<cv::Rect> faces;
     // TODO: Constant values as settings or real constants. No magic numbers.
     m_faceCascade.detectMultiScale(inputFrame, faces, 1.3f, 3, 0, cv::Size(100, 100));
 
-    return faces;
+    // TODO: Select most likely face
+    if (faces.size() > 0)
+    {
+        return std::optional<cv::Rect>(faces[0]);
+    }
+
+    return std::nullopt;
 }
 
 void CHaarTracker::cleanup()

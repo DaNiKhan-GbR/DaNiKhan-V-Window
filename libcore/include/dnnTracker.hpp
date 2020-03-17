@@ -9,7 +9,7 @@ namespace dnkvw
     {
         public:
             bool init();
-            std::vector<cv::Rect> trackFrame(cv::Mat& inputFrame);
+            std::optional<cv::Rect> trackFrame(cv::Mat& inputFrame);
             void cleanup();
 
         private:

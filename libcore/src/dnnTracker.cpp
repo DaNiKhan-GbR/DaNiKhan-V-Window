@@ -22,7 +22,7 @@ bool CDnnTracker::init()
     return true;
 }
 
-std::vector<cv::Rect> CDnnTracker::trackFrame(cv::Mat& inputFrame)
+std::optional<cv::Rect> CDnnTracker::trackFrame(cv::Mat& inputFrame)
 {
     std::vector<cv::Rect> faces;
 
@@ -47,7 +47,13 @@ std::vector<cv::Rect> CDnnTracker::trackFrame(cv::Mat& inputFrame)
         }
     }
 
-    return faces;
+    // TODO: Select most likely face
+    if (faces.size() > 0)
+    {
+        return std::optional<cv::Rect>(faces[0]);
+    }
+
+    return std::nullopt;
 }
 
 void CDnnTracker::cleanup()

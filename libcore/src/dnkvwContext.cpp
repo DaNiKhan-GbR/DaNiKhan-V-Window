@@ -114,7 +114,7 @@ void CDnkvwContext::loadFrustum(float near, float *left, float *right, float *to
         Vec3 pa(-1, -1, 0);
         Vec3 pb( 1, -1, 0);
         Vec3 pc(-1,  1, 0);
-        Vec3 pe(eyeX, -eyeY, eyeZ);
+        Vec3 pe(-eyeX, -eyeY, eyeZ);
 
         Vec3 vr = (pb - pa).norm();
         Vec3 vu = (pc - pa).norm();

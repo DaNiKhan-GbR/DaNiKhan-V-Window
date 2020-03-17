@@ -13,7 +13,7 @@ int main()
     {
         std::cout << "\nMenu\n----\n";
         std::cout << "1) DEBUG: Show video stream\n";
-        std::cout << "2) DEBUG: Show face tracking\n";
+        std::cout << "2) DEBUG: Show face tracking HaarCascade\n";
         std::cout << "3) DEBUG: Show face tracking DNN\n";
         std::cout << "q) Quit\n";
 

@@ -33,6 +33,8 @@ add_library(${PROJECT_NAME} SHARED
     include/haarTracker.hpp
     src/dnnTracker.cpp
     include/dnnTracker.hpp
+    src/thrdWinCalc.cpp
+    include/thrdWinCalc.hpp
     src/fpsTimer.cpp
     include/fpsTimer.hpp
     src/vec3.cpp

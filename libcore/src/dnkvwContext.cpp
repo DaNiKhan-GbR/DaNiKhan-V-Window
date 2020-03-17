@@ -19,6 +19,8 @@ void CDnkvwContext::__cleanup()
 {
     delete m_fpsTimer;
 
+    // TODO if tracker running, stop it!
+
     if (m_tracker)
     {
         m_tracker->cleanup();
@@ -38,6 +40,7 @@ bool CDnkvwContext::selectDnnTracker()
 
 bool CDnkvwContext::selectTracker(dnkvw::ITracker* tracker)
 {
+    // SYNCHRONIZED
     if (tracker->init())
     {
         if (m_tracker)
@@ -91,11 +94,13 @@ bool CDnkvwContext::startTracking(int cameraId)
 
 void CDnkvwContext::stopTracking()
 {
+    // SYNCHRONIZED
     m_videoCapture.release();
 }
 
 void CDnkvwContext::calibrate()
 {
+    // SYNCHRONIZED
     // TODO as a real constant
     constexpr int targetFaceCount = 10;
     constexpr int maxFaceTries = 50;

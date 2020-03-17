@@ -6,6 +6,22 @@ cmrc_add_resource_library(dnkvw_resources ALIAS dnkvw::rc NAMESPACE dnkvw_rc
     data/haarcascade_frontalface_default.xml
 )
 
+set(DNKVW_EXTRA_SOURCES )
+set(DNKVW_COMPANY DaNiKhan)
+set(DNKVW_DESCRIPTION "DaNiKhan Virtual Window Library")
+set(DNKVW_PRODUCTNAME "DaNiKhan V-Window")
+set(DNKVW_COPYRIGHT "(C) 2020, Daniel Klintworth and Nicolas Hollmann")
+set(DNKVW_FILENAME dnkvw.dll)
+
+if(MSVC)
+    configure_file(
+        ${PROJECT_SOURCE_DIR}/version.rc.in
+        ${CMAKE_BINARY_DIR}/_winrc/version.rc
+        @ONLY
+    )
+    list(APPEND DNKVW_EXTRA_SOURCES ${CMAKE_BINARY_DIR}/_winrc/version.rc)
+endif()
+
 add_library(${PROJECT_NAME} SHARED
     src/dnkvw.cpp
     src/dnkvwContext.cpp
@@ -21,6 +37,8 @@ add_library(${PROJECT_NAME} SHARED
     include/fpsTimer.hpp
     src/vec3.cpp
     include/vec3.hpp
+
+    ${DNKVW_EXTRA_SOURCES}
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include)

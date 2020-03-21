@@ -29,10 +29,29 @@ namespace dnkvw
     class CThreadedWindowCalculator
     {
         public:
-            CThreadedWindowCalculator() : m_thread(), m_fpsTimer(0.5f) {}
+            CThreadedWindowCalculator() : m_thread(), m_fpsTimer(0.5f), m_tracker(nullptr), m_eyeOffset()
+            {
+                CWindowResult initRes;
+                initRes.left    = -1.0f;
+                initRes.right   =  1.0f;
+                initRes.top     =  1.0f;
+                initRes.bottom  = -1.0f;
+                initRes.fps     =  1.0f;
+                m_lastResult = initRes;
+
+                CWindowSettings initSettings;
+                initSettings.aspect = 1.0;
+                initSettings.near = 1.0f;
+                initSettings.reseved1 = 0.0f;
+                m_settings = initSettings;
+
+                m_threadRunning = false;
+                m_signal_stop = false;
+                m_signal_calibrate = false;
+            };
             ~CThreadedWindowCalculator();
 
-            void start();
+            void start(int cameraId);
             void stop();
             void stopAsync();
             bool isRunning();
@@ -41,8 +60,12 @@ namespace dnkvw
             void storeSettings(CWindowSettings settings);
             void signalCalibrate();
 
+            bool selectTracker(ITracker *tracker);
+
         private:
-            void processingLoop();
+            void faceToEye(const cv::Rect& face, const float frameWidth, const float frameHeight, Vec3& eye);
+            void initVideoCapture(int cameraId);
+            void processingLoop(int cameraId);
             void calibrate();
             void calcWindow();
 

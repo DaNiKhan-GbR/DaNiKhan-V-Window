@@ -10,201 +10,68 @@ using dnkvw::CDnkvwContext;
 
 void CDnkvwContext::__init()
 {
-    m_fpsTimer = new CFpsTimer(0.5f);
-    m_tracker = nullptr;
-    m_eyeOffset = Vec3();
+    // TODO not needed??
 }
 
 void CDnkvwContext::__cleanup()
 {
-    delete m_fpsTimer;
-
-    // TODO if tracker running, stop it!
-
-    if (m_tracker)
-    {
-        m_tracker->cleanup();
-        delete m_tracker;
-    }
+    // TODO not needed??
 }
 
 bool CDnkvwContext::selectHaarTracker()
 {
-    return this->selectTracker(new CHaarTracker);
+    return m_winCalc.selectTracker(new CHaarTracker);
 }
 
 bool CDnkvwContext::selectDnnTracker()
 {
-    return this->selectTracker(new CDnnTracker);
+    return m_winCalc.selectTracker(new CDnnTracker);
 }
-
-bool CDnkvwContext::selectTracker(dnkvw::ITracker* tracker)
-{
-    // SYNCHRONIZED
-    if (tracker->init())
-    {
-        if (m_tracker)
-        {
-            m_tracker->cleanup();
-            delete m_tracker;
-        }
-
-        m_tracker = tracker;
-        return true;
-    }
-    else
-    {
-        delete tracker;
-        return false;
-    }
-}
-
 
 bool CDnkvwContext::startTracking(int cameraId)
 {
-    bool success;
-#ifdef _WIN32
-    success = m_videoCapture.open(cameraId, cv::CAP_MSMF);
-#else
-    success = m_videoCapture.open(cameraId);
-#endif
+    m_winCalc.start(cameraId);
 
-    if (success)
-    {
-        m_videoCapture.set(cv::CAP_PROP_FRAME_WIDTH, dnkvw::constant::targetWidth);
-        m_videoCapture.set(cv::CAP_PROP_FRAME_HEIGHT, dnkvw::constant::targetHeight);
-        m_videoCapture.set(cv::CAP_PROP_FPS, dnkvw::constant::targetFps);
-
-        if (::fabs(m_videoCapture.get(cv::CAP_PROP_FRAME_WIDTH) - dnkvw::constant::targetWidth) > 0.1f || 
-            ::fabs(m_videoCapture.get(cv::CAP_PROP_FRAME_HEIGHT) - dnkvw::constant::targetHeight) > 0.1f) 
-        {
-            std::cout << "WARNING: Camera resolution doesn't match target resolution of " << dnkvw::constant::targetWidth 
-                    << "x" << dnkvw::constant::targetHeight << ". Tracking results may be wrong." << std::endl;
-        }
-
-        if (::fabs(m_videoCapture.get(cv::CAP_PROP_FPS) - dnkvw::constant::targetFps) > 0.1f) 
-        {
-            std::cout << "WARNING: Camera framerate doesn't match target framerate of " << dnkvw::constant::targetFps 
-                    << "fps. Tracking results may be wrong." << std::endl;
-        }
-    }
-
-    return success;
+    return true; // TODO implement a correct success status
 }
 
 void CDnkvwContext::stopTracking()
 {
-    // SYNCHRONIZED
-    m_videoCapture.release();
+    // TODO Async or not? Maybe let the application decide?
+    m_winCalc.stop();
+}
+
+void CDnkvwContext::configureFrustum(float aspectRatio, float nearPlane)
+{
+    CWindowSettings settings;
+    settings.aspect = aspectRatio;
+    settings.near = nearPlane;
+    settings.reseved1 = 0.0f;
+    m_winCalc.storeSettings(settings);
 }
 
 void CDnkvwContext::calibrate()
 {
-    // SYNCHRONIZED
-    // TODO as a real constant
-    constexpr int targetFaceCount = 10;
-    constexpr int maxFaceTries = 50;
-
-    if (!m_videoCapture.isOpened())
-    {
-        return;
-    }
-
-    cv::Mat frame;
-    std::vector<cv::Rect> faces;
-
-    int tryCount = 0;
-    while (faces.size() < targetFaceCount && tryCount < maxFaceTries)
-    {
-        tryCount++;
-        m_videoCapture >> frame;
-        std::optional<cv::Rect> optFace = m_tracker->trackFrame(frame);
-
-        if (optFace)
-        {
-            faces.push_back(optFace.value());
-        }
-    }
-
-    if (faces.size() >= targetFaceCount / 2)
-    {
-        Vec3 eyeAvg;
-
-        for (auto const& face : faces)
-        {
-            // TODO Avoid Copy & Paste
-            float eyeX = ((float)(face.x + face.width / 2.0f)) / ((float)frame.cols) * 2.0f - 1.0f;
-            float eyeY = ((float)(face.y + face.width / 4.0f)) / ((float)frame.rows) * 2.0f - 1.0f; 
-            float eyeZ = 100.0f / (float)face.width;
-
-            eyeAvg[0] += eyeX;
-            eyeAvg[1] += eyeY;
-            eyeAvg[2] += eyeZ;
-        }
-
-        eyeAvg /= (float) faces.size();
-        
-        m_eyeOffset = -eyeAvg;
-        m_eyeOffset[2] = eyeAvg[2]; // TODO Mal schauen, aber richtig hart
-    }
+    m_winCalc.signalCalibrate();
 }
 
-void CDnkvwContext::loadFrustum(float near, float *left, float *right, float *top, float *bottom)
+void CDnkvwContext::loadFrustum(float *left, float *right, float *top, float *bottom, float *fps)
 {
-    if (!m_videoCapture.isOpened())
+    auto result = m_winCalc.obtainLastResult();
+    *left = result.left;
+    *right = result.right;
+    *bottom = result.bottom;
+    *top = result.top;
+
+    if (fps)
     {
-        return;
-    }
-
-    cv::Mat frame;
-    m_videoCapture >> frame;
-    std::optional<cv::Rect> optFace = m_tracker->trackFrame(frame);
-
-    if (optFace)
-    {
-        cv::Rect face = optFace.value();
-
-        // TODO Avoid Copy & Paste
-        // TODO too hard for an good approx.
-        float eyeX = ((float)(face.x + face.width / 2.0f)) / ((float)frame.cols) * 2.0f - 1.0f;
-        float eyeY = ((float)(face.y + face.width / 4.0f)) / ((float)frame.rows) * 2.0f - 1.0f; 
-        float eyeZ = 100.0f / (float)face.width;
-
-        eyeX += m_eyeOffset[0];
-        eyeY += m_eyeOffset[1];
-        eyeZ += m_eyeOffset[2];
-
-        Vec3 pa(-1, -1, 0);
-        Vec3 pb( 1, -1, 0);
-        Vec3 pc(-1,  1, 0);
-        Vec3 pe(-eyeX, -eyeY, eyeZ);
-
-        Vec3 vr = (pb - pa).norm();
-        Vec3 vu = (pc - pa).norm();
-        Vec3 vn = vr.cross(vu).norm();
-
-        Vec3 va = pa - pe;
-        Vec3 vb = pb - pe;
-        Vec3 vc = pc - pe;
-
-        float d = -(vn * va);
-        float nearOverD = near / d;
-
-        float l = (vr * va) * nearOverD;
-        float r = (vr * vb) * nearOverD;
-        float b = (vu * va) * nearOverD;
-        float t = (vu * vc) * nearOverD;
-
-        *left = l;
-        *right = r;
-        *bottom = b;
-        *top = t;
+        *fps = result.fps;
     }
 }
 
 void CDnkvwContext::debugCameraInput()
 {
-    if (!m_videoCapture.isOpened())
+    /*if (!m_videoCapture.isOpened())
     {
         return;
     }
@@ -237,12 +104,12 @@ void CDnkvwContext::debugCameraInput()
     }
 
     cv::destroyWindow(WINDOW_NAME);
-    cv::waitKey(1); // Force closing window on mac
+    cv::waitKey(1); // Force closing window on mac*/
 }
 
 void CDnkvwContext::debugCameraFace()
 {
-    if (!m_videoCapture.isOpened() || !m_tracker)
+    /*if (!m_videoCapture.isOpened() || !m_tracker)
     {
         return;
     }
@@ -283,6 +150,6 @@ void CDnkvwContext::debugCameraFace()
     }
 
     cv::destroyWindow(WINDOW_NAME);
-    cv::waitKey(1); // Force closing window on mac
+    cv::waitKey(1); // Force closing window on mac*/
 }
 

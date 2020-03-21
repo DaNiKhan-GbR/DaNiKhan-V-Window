@@ -40,14 +40,19 @@ extern "C" {
         context->stopTracking();
     }
 
+    DNKVW_API void dnkvw_configureFrustum(IDnkvwHandle context, float aspectRatio, float nearPlane)
+    {
+        context->configureFrustum(aspectRatio, nearPlane);
+    }
+
     DNKVW_API void dnkvw_calibrate(IDnkvwHandle context)
     {
         context->calibrate();
     }
 
-    DNKVW_API void dnkvw_loadFrustum(IDnkvwHandle context, float near, float *left, float *right, float *top, float *bottom)
+    DNKVW_API void dnkvw_loadFrustum(IDnkvwHandle context, float* left, float* right, float* top, float* bottom, float* fps)
     {
-        context->loadFrustum(near, left, right, top, bottom);
+        context->loadFrustum(left, right, top, bottom, fps);
     }
 
     DNKVW_API void dnkvw_debugCameraInput(IDnkvwHandle context)

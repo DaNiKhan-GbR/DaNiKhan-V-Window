@@ -16,8 +16,9 @@ struct IDnkvwContext
     virtual bool startTracking(int cameraId) = 0;
     virtual void stopTracking() = 0;
 
+    virtual void configureFrustum(float aspectRatio, float nearPlane) = 0;
     virtual void calibrate() = 0;
-    virtual void loadFrustum(float near, float *left, float *right, float *top, float *bottom) = 0;
+    virtual void loadFrustum(float *left, float *right, float *top, float *bottom, float *fps = nullptr) = 0;
 
     virtual void debugCameraInput() = 0;
     virtual void debugCameraFace() = 0;

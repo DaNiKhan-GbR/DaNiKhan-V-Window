@@ -8,12 +8,21 @@ CThreadedWindowCalculator::~CThreadedWindowCalculator()
     {
         this->stop();
     }
+
+    if (m_tracker)
+    {
+        m_tracker->cleanup();
+        delete m_tracker;
+    }
 }
 
-void CThreadedWindowCalculator::start()
+void CThreadedWindowCalculator::start(int cameraId)
 {
-    m_threadRunning = true;
-    m_thread = std::thread([this]{ this->processingLoop(); });
+    if (!m_threadRunning.load())
+    {
+        m_threadRunning = true;
+        m_thread = std::thread([this, cameraId]{ this->processingLoop(cameraId); });
+    }
 }
 
 void CThreadedWindowCalculator::stop()
@@ -51,8 +60,69 @@ void CThreadedWindowCalculator::signalCalibrate()
     m_signal_calibrate = true;
 }
 
-void CThreadedWindowCalculator::processingLoop()
+bool CThreadedWindowCalculator::selectTracker(dnkvw::ITracker* tracker)
 {
+    if (tracker->init())
+    {
+        if (m_tracker)
+        {
+            m_tracker->cleanup();
+            delete m_tracker;
+        }
+
+        m_tracker = tracker;
+        return true;
+    }
+    else
+    {
+        delete tracker;
+        return false;
+    }
+}
+
+void CThreadedWindowCalculator::faceToEye(const cv::Rect& face, const float frameWidth, const float frameHeight, dnkvw::Vec3& eye)
+{
+    // TODO too hard for an good approx.
+    eye[0] = ((float)(face.x + face.width / 2.0f)) / frameWidth * 2.0f - 1.0f;
+    eye[1] = ((float)(face.y + face.height / 4.0f)) / frameHeight * 2.0f - 1.0f; 
+    eye[2] = 100.0f / (float)face.width;
+}
+
+void CThreadedWindowCalculator::initVideoCapture(int cameraId)
+{
+    bool success;
+#ifdef _WIN32
+    success = m_videoCapture.open(cameraId, cv::CAP_MSMF);
+#else
+    success = m_videoCapture.open(cameraId);
+#endif
+
+    if (success)
+    {
+        m_videoCapture.set(cv::CAP_PROP_FRAME_WIDTH, dnkvw::constant::targetWidth);
+        m_videoCapture.set(cv::CAP_PROP_FRAME_HEIGHT, dnkvw::constant::targetHeight);
+        m_videoCapture.set(cv::CAP_PROP_FPS, dnkvw::constant::targetFps);
+
+        if (::fabs(m_videoCapture.get(cv::CAP_PROP_FRAME_WIDTH) - dnkvw::constant::targetWidth) > 0.1f || 
+            ::fabs(m_videoCapture.get(cv::CAP_PROP_FRAME_HEIGHT) - dnkvw::constant::targetHeight) > 0.1f) 
+        {
+            std::cout << "WARNING: Camera resolution doesn't match target resolution of " << dnkvw::constant::targetWidth 
+                    << "x" << dnkvw::constant::targetHeight << ". Tracking results may be wrong." << std::endl;
+        }
+
+        if (::fabs(m_videoCapture.get(cv::CAP_PROP_FPS) - dnkvw::constant::targetFps) > 0.1f) 
+        {
+            std::cout << "WARNING: Camera framerate doesn't match target framerate of " << dnkvw::constant::targetFps 
+                    << "fps. Tracking results may be wrong." << std::endl;
+        }
+    }
+}
+
+void CThreadedWindowCalculator::processingLoop(int cameraId)
+{
+    // Init
+    initVideoCapture(cameraId);
+
     // Processing Loop
     while (!m_signal_stop)
     {
@@ -65,8 +135,12 @@ void CThreadedWindowCalculator::processingLoop()
         {
             this->calcWindow();
         }
+
+        // std::this_thread::yield(); // TODO check if relevant?
     }
 
+    // Cleanup
+    m_videoCapture.release();
     m_threadRunning = false;
 }
 
@@ -103,14 +177,9 @@ void CThreadedWindowCalculator::calibrate()
 
         for (auto const& face : faces)
         {
-            // TODO Avoid Copy & Paste
-            float eyeX = ((float)(face.x + face.width / 2.0f)) / ((float)frame.cols) * 2.0f - 1.0f;
-            float eyeY = ((float)(face.y + face.width / 4.0f)) / ((float)frame.rows) * 2.0f - 1.0f; 
-            float eyeZ = 100.0f / (float)face.width;
-
-            eyeAvg[0] += eyeX;
-            eyeAvg[1] += eyeY;
-            eyeAvg[2] += eyeZ;
+            Vec3 eye;
+            faceToEye(face, (float)frame.cols, (float)frame.rows, eye);
+            eyeAvg += eye;
         }
 
         eyeAvg /= (float) faces.size();
@@ -122,6 +191,7 @@ void CThreadedWindowCalculator::calibrate()
 
 void CThreadedWindowCalculator::calcWindow()
 {
+    m_fpsTimer.start();
     if (!m_videoCapture.isOpened())
     {
         return;
@@ -133,22 +203,17 @@ void CThreadedWindowCalculator::calcWindow()
 
     if (optFace)
     {
+        CWindowSettings settings = m_settings.load();
         cv::Rect face = optFace.value();
 
-        // TODO Avoid Copy & Paste
-        // TODO too hard for an good approx.
-        float eyeX = ((float)(face.x + face.width / 2.0f)) / ((float)frame.cols) * 2.0f - 1.0f;
-        float eyeY = ((float)(face.y + face.width / 4.0f)) / ((float)frame.rows) * 2.0f - 1.0f; 
-        float eyeZ = 100.0f / (float)face.width;
-
-        eyeX += m_eyeOffset[0];
-        eyeY += m_eyeOffset[1];
-        eyeZ += m_eyeOffset[2];
+        Vec3 eye;
+        faceToEye(face, (float)frame.cols, (float)frame.rows, eye);
+        eye += m_eyeOffset;
 
         Vec3 pa(-1, -1, 0);
         Vec3 pb( 1, -1, 0);
         Vec3 pc(-1,  1, 0);
-        Vec3 pe(-eyeX, -eyeY, eyeZ);
+        Vec3 pe(-eye[0], -eye[1], eye[2]);
 
         Vec3 vr = (pb - pa).norm();
         Vec3 vu = (pc - pa).norm();
@@ -159,13 +224,21 @@ void CThreadedWindowCalculator::calcWindow()
         Vec3 vc = pc - pe;
 
         float d = -(vn * va);
-        float nearOverD = m_settings.load().near / d;
+        float nearOverD = settings.near / d;
 
         float l = (vr * va) * nearOverD;
         float r = (vr * vb) * nearOverD;
         float b = (vu * va) * nearOverD;
         float t = (vu * vc) * nearOverD;
 
-        // Todo set result
+        // Set result
+        CWindowResult newResult;
+        newResult.fps = m_fpsTimer.stop(); // TODO Capture fps for frame dropping / automatic quality adjustments
+        newResult.left = l;
+        newResult.right = r;
+        newResult.bottom = b;
+        newResult.top = t;
+
+        m_lastResult = newResult;
     }
 }

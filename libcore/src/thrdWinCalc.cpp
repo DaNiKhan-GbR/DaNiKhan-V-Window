@@ -210,9 +210,9 @@ void CThreadedWindowCalculator::calcWindow()
         faceToEye(face, (float)frame.cols, (float)frame.rows, eye);
         eye += m_eyeOffset;
 
-        Vec3 pa(-1, -1, 0);
-        Vec3 pb( 1, -1, 0);
-        Vec3 pc(-1,  1, 0);
+        Vec3 pa(-settings.aspect, -1, 0);
+        Vec3 pb( settings.aspect, -1, 0);
+        Vec3 pc(-settings.aspect,  1, 0);
         Vec3 pe(-eye[0], -eye[1], eye[2]);
 
         Vec3 vr = (pb - pa).norm();

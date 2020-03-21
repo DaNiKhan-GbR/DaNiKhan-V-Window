@@ -80,6 +80,98 @@ bool CThreadedWindowCalculator::selectTracker(dnkvw::ITracker* tracker)
     }
 }
 
+void CThreadedWindowCalculator::debugCameraInput(int cameraId)
+{
+    initVideoCapture(cameraId);
+
+    if (!m_videoCapture.isOpened())
+    {
+        return;
+    }
+
+    const std::string WINDOW_NAME = "Dnkvw Debug Input";
+
+    cv::namedWindow(WINDOW_NAME, cv::WINDOW_AUTOSIZE);
+    cv::Mat frame;
+
+    while (true)
+    {
+        m_fpsTimer.start();
+
+        m_videoCapture >> frame;
+
+        cv::flip(frame, frame, 1);
+
+        float fps = m_fpsTimer.stop();
+
+        char buffer[40] = { 0 };
+        snprintf(buffer, 40, "FPS: %.1f", fps);
+        cv::putText(frame, buffer, cv::Point(20, 40), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 255, 0));
+
+        cv::imshow(WINDOW_NAME, frame);
+
+        if (cv::waitKey(1) >= 0)
+        {
+            break;
+        }
+    }
+
+    cv::destroyWindow(WINDOW_NAME);
+    cv::waitKey(1); // Force closing window on mac
+
+    m_videoCapture.release();
+}
+
+void CThreadedWindowCalculator::debugCameraFace(int cameraId)
+{
+    initVideoCapture(cameraId);
+
+    if (!m_videoCapture.isOpened() || !m_tracker)
+    {
+        return;
+    }
+    
+    const std::string WINDOW_NAME = "Dnkvw Debug Facedetection";
+
+    cv::namedWindow(WINDOW_NAME, cv::WINDOW_AUTOSIZE);
+
+    cv::Mat frame;
+
+    while (true)
+    {
+        m_fpsTimer.start();
+
+        m_videoCapture >> frame;
+
+        std::optional<cv::Rect> optFace = m_tracker->trackFrame(frame);
+
+        if (optFace)
+        {
+            cv::rectangle(frame, optFace.value(), cv::Scalar(0, 255, 0), 2);
+        }
+
+        cv::flip(frame, frame, 1);
+
+        float fps = m_fpsTimer.stop();
+
+        char buffer[40] = { 0 };
+        snprintf(buffer, 40, "FPS: %.1f", fps);
+        cv::putText(frame, buffer, cv::Point(20, 40), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 255, 0));
+
+        cv::imshow(WINDOW_NAME, frame);
+
+        if (cv::waitKey(1) >= 0)
+        {
+            break;
+        }
+    }
+
+    cv::destroyWindow(WINDOW_NAME);
+    cv::waitKey(1); // Force closing window on mac
+
+    m_videoCapture.release();
+}
+
 void CThreadedWindowCalculator::faceToEye(const cv::Rect& face, const float frameWidth, const float frameHeight, dnkvw::Vec3& eye)
 {
     // TODO too hard for an good approx.

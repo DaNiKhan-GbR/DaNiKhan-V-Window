@@ -62,6 +62,9 @@ namespace dnkvw
 
             bool selectTracker(ITracker *tracker);
 
+            void debugCameraInput(int cameraId);
+            void debugCameraFace(int cameraId);
+
         private:
             void faceToEye(const cv::Rect& face, const float frameWidth, const float frameHeight, Vec3& eye);
             void initVideoCapture(int cameraId);

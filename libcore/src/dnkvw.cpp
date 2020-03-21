@@ -55,13 +55,13 @@ extern "C" {
         context->loadFrustum(left, right, top, bottom, fps);
     }
 
-    DNKVW_API void dnkvw_debugCameraInput(IDnkvwHandle context)
+    DNKVW_API void dnkvw_debugCameraInput(IDnkvwHandle context, int cameraId)
     {
-        context->debugCameraInput();
+        context->debugCameraInput(cameraId);
     }
 
-    DNKVW_API void dnkvw_debugCameraFace(IDnkvwHandle context)
+    DNKVW_API void dnkvw_debugCameraFace(IDnkvwHandle context, int cameraId)
     {
-        context->debugCameraFace();
+        context->debugCameraFace(cameraId);
     }
 }

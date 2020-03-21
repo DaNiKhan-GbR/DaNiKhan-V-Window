@@ -27,8 +27,8 @@ namespace dnkvw
             void calibrate();
             void loadFrustum(float *left, float *right, float *top, float *bottom, float *fps = nullptr);
 
-            void debugCameraInput();
-            void debugCameraFace();
+            void debugCameraInput(int cameraId);
+            void debugCameraFace(int cameraId);
 
         private:
             CThreadedWindowCalculator m_winCalc;

@@ -69,87 +69,13 @@ void CDnkvwContext::loadFrustum(float *left, float *right, float *top, float *bo
     }
 }
 
-void CDnkvwContext::debugCameraInput()
+void CDnkvwContext::debugCameraInput(int cameraId)
 {
-    /*if (!m_videoCapture.isOpened())
-    {
-        return;
-    }
-
-    const std::string WINDOW_NAME = "Dnkvw Debug Input";
-
-    cv::namedWindow(WINDOW_NAME, cv::WINDOW_AUTOSIZE);
-    cv::Mat frame;
-
-    while (true)
-    {
-        m_fpsTimer->start();
-
-        m_videoCapture >> frame;
-
-        cv::flip(frame, frame, 1);
-
-        float fps = m_fpsTimer->stop();
-
-        char buffer[40] = { 0 };
-        snprintf(buffer, 40, "FPS: %.1f", fps);
-        cv::putText(frame, buffer, cv::Point(20, 40), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 255, 0));
-
-        cv::imshow(WINDOW_NAME, frame);
-
-        if (cv::waitKey(1) >= 0)
-        {
-            break;
-        }
-    }
-
-    cv::destroyWindow(WINDOW_NAME);
-    cv::waitKey(1); // Force closing window on mac*/
+    m_winCalc.debugCameraInput(cameraId);
 }
 
-void CDnkvwContext::debugCameraFace()
+void CDnkvwContext::debugCameraFace(int cameraId)
 {
-    /*if (!m_videoCapture.isOpened() || !m_tracker)
-    {
-        return;
-    }
-    
-    const std::string WINDOW_NAME = "Dnkvw Debug Input";
-
-    cv::namedWindow(WINDOW_NAME, cv::WINDOW_AUTOSIZE);
-
-    cv::Mat frame;
-
-    while (true)
-    {
-        m_fpsTimer->start();
-
-        m_videoCapture >> frame;
-
-        std::optional<cv::Rect> optFace = m_tracker->trackFrame(frame);
-
-        if (optFace)
-        {
-            cv::rectangle(frame, optFace.value(), cv::Scalar(0, 255, 0), 2);
-        }
-
-        cv::flip(frame, frame, 1);
-
-        float fps = m_fpsTimer->stop();
-
-        char buffer[40] = { 0 };
-        snprintf(buffer, 40, "FPS: %.1f", fps);
-        cv::putText(frame, buffer, cv::Point(20, 40), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 255, 0));
-
-        cv::imshow(WINDOW_NAME, frame);
-
-        if (cv::waitKey(1) >= 0)
-        {
-            break;
-        }
-    }
-
-    cv::destroyWindow(WINDOW_NAME);
-    cv::waitKey(1); // Force closing window on mac*/
+    m_winCalc.debugCameraFace(cameraId);
 }
 

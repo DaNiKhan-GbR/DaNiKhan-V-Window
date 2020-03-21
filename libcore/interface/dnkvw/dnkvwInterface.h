@@ -20,8 +20,8 @@ struct IDnkvwContext
     virtual void calibrate() = 0;
     virtual void loadFrustum(float *left, float *right, float *top, float *bottom, float *fps = nullptr) = 0;
 
-    virtual void debugCameraInput() = 0;
-    virtual void debugCameraFace() = 0;
+    virtual void debugCameraInput(int cameraId) = 0;
+    virtual void debugCameraFace(int cameraId) = 0;
 };
 
 typedef IDnkvwContext* IDnkvwHandle;

@@ -24,51 +24,27 @@ int main()
         {
             case '1':
             {
-                std::cout << "Starting Tracking...\t\t";
-                bool ok = dnkvw->startTracking(0);
-                std::cout << (ok ? "OK.\n" : "Error!\n");
-
-                std::cout << "Open DEBUG Window: Camera Input.\nPress any key to exit.\n";
-                dnkvw->debugCameraInput();
+                std::cout << "Press any key to exit in open window.\n";
+                dnkvw->debugCameraInput(0);
                 std::cout << "Window closed.\n";
-
-                std::cout << "Stopping Tracking...\t\t";
-                dnkvw->stopTracking();
-                std::cout << "OK.\n";
                 break;
             }
 
             case '2':
             {
+                std::cout << "Press any key to exit in open window.\n";
                 dnkvw->selectHaarTracker();
-                std::cout << "Starting Tracking...\t\t";
-                bool ok = dnkvw->startTracking(0);
-                std::cout << (ok ? "OK.\n" : "Error!\n");
-
-                std::cout << "Open DEBUG Window: Face Tracking.\nPress any key to exit.\n";
-                dnkvw->debugCameraFace();
+                dnkvw->debugCameraFace(0);
                 std::cout << "Window closed.\n";
-
-                std::cout << "Stopping Tracking...\t\t";
-                dnkvw->stopTracking();
-                std::cout << "OK.\n";
                 break;
             }
 
             case '3':
             {
+                std::cout << "Press any key to exit in open window.\n";
                 dnkvw->selectDnnTracker();
-                std::cout << "Starting Tracking...\t\t";
-                bool ok = dnkvw->startTracking(0);
-                std::cout << (ok ? "OK.\n" : "Error!\n");
-
-                std::cout << "Open DEBUG Window: Face Tracking DNN.\nPress any key to exit.\n";
-                dnkvw->debugCameraFace();
+                dnkvw->debugCameraFace(0);
                 std::cout << "Window closed.\n";
-
-                std::cout << "Stopping Tracking...\t\t";
-                dnkvw->stopTracking();
-                std::cout << "OK.\n";
                 break;
             }
             

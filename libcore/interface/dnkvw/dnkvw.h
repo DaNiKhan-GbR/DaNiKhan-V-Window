@@ -30,8 +30,8 @@ extern "C" {
     DNKVW_API void dnkvw_calibrate(IDnkvwHandle context);
     DNKVW_API void dnkvw_loadFrustum(IDnkvwHandle context, float* left, float* right, float* top, float* bottom, float* fps);
 
-    DNKVW_API void dnkvw_debugCameraInput(IDnkvwHandle context);
-    DNKVW_API void dnkvw_debugCameraFace(IDnkvwHandle context);
+    DNKVW_API void dnkvw_debugCameraInput(IDnkvwHandle context, int cameraId);
+    DNKVW_API void dnkvw_debugCameraFace(IDnkvwHandle context, int cameraId);
 
 #ifdef __cplusplus
 }

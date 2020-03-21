@@ -76,6 +76,7 @@ namespace dnkvw
             ITracker *m_tracker;
             CFpsTimer m_fpsTimer;
             Vec3 m_eyeOffset;
+            Vec3 m_eyeAvg;
 
             std::thread m_thread;
             std::atomic<CWindowResult> m_lastResult;

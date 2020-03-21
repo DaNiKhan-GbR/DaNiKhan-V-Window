@@ -1,4 +1,5 @@
 #include "thrdWinCalc.hpp"
+#include "constants.hpp"
 
 using dnkvw::CThreadedWindowCalculator;
 
@@ -302,10 +303,13 @@ void CThreadedWindowCalculator::calcWindow()
         faceToEye(face, (float)frame.cols, (float)frame.rows, eye);
         eye += m_eyeOffset;
 
+        constexpr float eyeAvgFactor = dnkvw::constant::eyeAvgFactor;
+        m_eyeAvg = m_eyeAvg * (1.0f - eyeAvgFactor) + eye * eyeAvgFactor;
+
         Vec3 pa(-settings.aspect, -1, 0);
         Vec3 pb( settings.aspect, -1, 0);
         Vec3 pc(-settings.aspect,  1, 0);
-        Vec3 pe(-eye[0], -eye[1], eye[2]);
+        Vec3 pe(-m_eyeAvg[0], -m_eyeAvg[1], m_eyeAvg[2]);
 
         Vec3 vr = (pb - pa).norm();
         Vec3 vu = (pc - pa).norm();

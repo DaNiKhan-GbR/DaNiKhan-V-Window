@@ -43,8 +43,26 @@ add_library(${PROJECT_NAME} SHARED
     ${DNKVW_EXTRA_SOURCES}
 )
 
-target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include)
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/interface)
+if(OpenCV_SHARED)
+    message(WARNING " The selected OpenCV version is built as a shared library.\n"
+                    " You can use it, but you always need to deploy the\n"
+                    " OpenCV shared libraries with your applications.\n\n"
+                    " The recommended way is to build OpenCV as a static library,\n"
+                    " then change the OpenCV_DIR variable for this project to the\n"
+                    " static OpenCV install dir. This way dnkvw includes all needed\n"
+                    " functions and can be used without other dependencies.\n"
+    )
+endif()
+
+add_feature_info("Static OpenCV" "NOT ${OpenCV_SHARED}" "linking OpenCV as a static library.")
+
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${OpenCV_INCLUDE_DIRS})
+target_include_directories(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/include")
+target_include_directories(${PROJECT_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/interface")
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${CMAKE_THREAD_LIBS_INIT} ${OpenCV_LIBS} dnkvw::rc)
+
+#set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+
 target_compile_definitions(${PROJECT_NAME} PRIVATE DNKVW_WIN_EXPORT)

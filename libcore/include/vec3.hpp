@@ -1,41 +1,206 @@
+/**
+ * @file vec3.hpp
+ * 
+ * 3D vector type.
+ */
+
 #pragma once
 
 namespace dnkvw 
 {
+    /**
+     * This class is a basic 3D float Vector.
+     */
     class Vec3
     {
         public:
+            /**
+             * The default constructor initializes x, y and z to 0.
+             */
             Vec3();
+
+            /**
+             * This constructor initializes x, y and z with the given values.
+             * 
+             * @param x - the X value
+             * @param y - the Y value
+             * @param z - the Z value
+             */
             Vec3(float x, float y, float z);
+
+            /**
+             * The copy-constructor copies all values from another vector.
+             * 
+             * @param other the copy source
+             */
             Vec3(const Vec3& other);
 
+            /**
+             * The copy-assign operator copies all values from another vector.
+             * 
+             * @param other the copy source
+             * @return a reference to this vector
+             */
             Vec3& operator=(const Vec3& other);
 
+            /**
+             * The destructor does nothing.
+             */
             ~Vec3() {}
-
+            
+            /**
+             * The unary + operator does nothing.
+             * 
+             * @return a reference to this vector
+             */
             const Vec3& operator+() const;
+
+            /**
+             * The unary - operator inverts all axis values.
+             * 
+             * @return the inverted vector
+             */
             Vec3 operator-() const;
+
+            /**
+             * The index operator returns the value of one axis.
+             * 0 = X, 1 = Y, 2 = Z
+             * 
+             * @param i the index, must be 0, 1 or 2
+             * @return the value of this axis
+             */
             float operator[](int i) const;
+
+            /**
+             * The index reference operator returns a reference to one axis.
+             * 0 = X, 1 = Y, 2 = Z
+             * 
+             * @param i the index, must be 0, 1 or 2
+             * @return a modifiable reference to one axis value
+             */
             float& operator[](int i);
 
+            /**
+             * Component wise vector addition.
+             * 
+             * @param v2 the other vector
+             * @return the vector sum
+             */
             Vec3& operator+=(const Vec3& v2);
+
+            /**
+             * Component wise vector subtraction.
+             * 
+             * @param v2 the other vector
+             * @return the vector difference
+             */
             Vec3& operator-=(const Vec3& v2);
+
+            /**
+             * Multiply a vector by a scalar.
+             * 
+             * @param t the scalar to multiply with
+             * @return the scaled vector
+             */
             Vec3& operator*=(const float t);
+
+            /**
+             * Divide a vector by a scalar.
+             * 
+             * @param t the scalar to divide by
+             * @return the scaled vector
+             */
             Vec3& operator/=(const float t);
 
+            /**
+             * The length of the vector.
+             * 
+             * @return the length of the vector
+             */
             float length();
+
+            /**
+             * Normalizes this vector.
+             * 
+             * @return the normalized vector
+             */
             Vec3 norm();
+
+            /**
+             * Calculates the cross product between this and another vector.
+             * 
+             * @param v2 the other vector
+             * @return the cross product
+             */
             Vec3 cross(const Vec3& v2);
 
         private:
+            /**
+             * The internal axis memory.
+             */
             float m_values[3];
     };
 
+    /**
+     * Component wise vector addition.
+     * 
+     * @param v1 the first summand
+     * @param v2 the second summand
+     * @return the sum
+     */
     Vec3 operator+(const Vec3& v1, const Vec3& v2);
+
+    /**
+     * Component wise vector subtraction.
+     * 
+     * @param v1 the minuend
+     * @param v2 the subtrahend
+     * @return the difference
+     */
     Vec3 operator-(const Vec3& v1, const Vec3& v2);
+
+    /**
+     * Calculates the dot product between two vectors.
+     * 
+     * @param v1 the first vector
+     * @param v2 the second vector
+     * @return the dot product
+     */
     float operator*(const Vec3& v1, const Vec3& v2);
+
+    /**
+     * Multiply a vector with a scalar.
+     * 
+     * @param v1 the vector
+     * @param s the scalar
+     * @return the scaled vector
+     */
     Vec3 operator*(const Vec3& v1, const float s);
+
+    /**
+     * Divide a vector by a scalar.
+     * 
+     * @param v1 the vector
+     * @param s the scalar to divide by
+     * @return the scaled vector
+     */
     Vec3 operator/(const Vec3& v1, const float s);
+
+    /**
+     * Multiply a scalar with a vector.
+     * 
+     * @param s the scalar
+     * @param v1 the vector
+     * @return the scaled vector
+     */
     Vec3 operator*(const float s, const Vec3& v1);
+
+    /**
+     * Divide a scalar by a vector.
+     * 
+     * @param s the scalar
+     * @param v1 the vector to divide by
+     * @return the scaled vector
+     */
     Vec3 operator/(const float s, const Vec3& v1);
 }

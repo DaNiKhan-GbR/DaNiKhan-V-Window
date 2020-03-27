@@ -1,3 +1,9 @@
+/**
+ * @file dnkvw.h
+ * 
+ * This is the public C/C++ API for DaNiKhan Virtual Window (dnkvw).
+ */
+
 #ifndef DNKVW_HEADER
 #define DNKVW_HEADER
 

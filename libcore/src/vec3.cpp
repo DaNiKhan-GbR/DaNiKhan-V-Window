@@ -1,3 +1,9 @@
+/**
+ * @file vec3.cpp
+ * 
+ * 3D vector type.
+ */
+
 #include "vec3.hpp"
 
 #include <cmath>
@@ -86,6 +92,7 @@ Vec3& Vec3::operator*=(const float t)
 
 Vec3& Vec3::operator/=(const float t)
 {
+    // Precalculate the inverste to avoid 2 divisions.
     float ti = 1.0f / t;
 
     m_values[0] *= ti;
@@ -97,6 +104,7 @@ Vec3& Vec3::operator/=(const float t)
 
 float Vec3::length()
 {
+    // Pythagoras
     return std::sqrtf(m_values[0] * m_values[0] + m_values[1] * m_values[1] + m_values[2] * m_values[2]);
 }
 
@@ -136,16 +144,19 @@ Vec3 dnkvw::operator*(const Vec3& v1, const float s)
 
 Vec3 dnkvw::operator/(const Vec3& v1, const float s)
 {
+    // Precalculate inverse to avoid 2 divisions.
     float si = 1.0f / s;
     return Vec3(v1[0] * si, v1[1] * si, v1[2] * si);
 }
 
 Vec3 dnkvw::operator*(const float s, const Vec3& v1)
 {
+    // Vector dot product is commutative.
+    // Only mirror existing functionality.
     return v1 * s;
 }
 
 Vec3 dnkvw::operator/(const float s, const Vec3& v1)
 {
-    return v1 / s;
+    return Vec3(s / v1[0], s / v1[1], s / v1[2]);
 }

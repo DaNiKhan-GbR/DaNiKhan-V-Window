@@ -11,15 +11,6 @@ layer {
   type: "BatchNorm"
   bottom: "data"
   top: "data_bn"
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
 }
 layer {
   name: "data_scale"
@@ -71,15 +62,6 @@ layer {
   type: "BatchNorm"
   bottom: "conv1_h"
   top: "conv1_h"
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
 }
 layer {
   name: "conv1_scale_h"
@@ -143,15 +125,6 @@ layer {
   type: "BatchNorm"
   bottom: "layer_64_1_conv1_h"
   top: "layer_64_1_conv1_h"
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
 }
 layer {
   name: "layer_64_1_scale2_h"
@@ -212,15 +185,6 @@ layer {
   type: "BatchNorm"
   bottom: "layer_64_1_sum"
   top: "layer_128_1_bn1_h"
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
 }
 layer {
   name: "layer_128_1_scale1_h"
@@ -274,15 +238,6 @@ layer {
   type: "BatchNorm"
   bottom: "layer_128_1_conv1_h"
   top: "layer_128_1_conv1_h"
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
 }
 layer {
   name: "layer_128_1_scale2"
@@ -367,15 +322,6 @@ layer {
   type: "BatchNorm"
   bottom: "layer_128_1_sum"
   top: "layer_256_1_bn1"
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
 }
 layer {
   name: "layer_256_1_scale1"
@@ -429,15 +375,6 @@ layer {
   type: "BatchNorm"
   bottom: "layer_256_1_conv1"
   top: "layer_256_1_conv1"
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
 }
 layer {
   name: "layer_256_1_scale2"
@@ -522,15 +459,6 @@ layer {
   type: "BatchNorm"
   bottom: "layer_256_1_sum"
   top: "layer_512_1_bn1"
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
 }
 layer {
   name: "layer_512_1_scale1"
@@ -584,15 +512,6 @@ layer {
   type: "BatchNorm"
   bottom: "layer_512_1_conv1_h"
   top: "layer_512_1_conv1_h"
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
 }
 layer {
   name: "layer_512_1_scale2_h"
@@ -678,15 +597,6 @@ layer {
   type: "BatchNorm"
   bottom: "layer_512_1_sum"
   top: "layer_512_1_sum"
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
-  param {
-    lr_mult: 0.0
-  }
 }
 layer {
   name: "last_scale_h"

@@ -16,7 +16,8 @@ bool CDnnTracker::init()
     try {
         m_dnnNet = cv::dnn::readNetFromCaffe(prototxt.cbegin(), prototxt.size(), caffemodel.cbegin(), caffemodel.size());
     } catch (cv::Exception& e) {
-        logger(ELog::ERROR) << "Couldn't load DNN data: " << e.msg;
+        logger(ELog::ERROR) << "Couldn't load DNN data: ";
+        logger(ELog::ERROR) << e.msg;
         return false;
     }
 

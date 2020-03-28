@@ -4,7 +4,9 @@ using dnkvw::ELog;
 using dnkvw::CLogStream;
 using dnkvw::CLogger;
 
-// Global Logger instance.
+/**
+ * Global Logger instance.
+ */
 CLogger dnkvw::logger;
 
 CLogger::CLogger()
@@ -12,7 +14,6 @@ CLogger::CLogger()
     m_logLevel = ELog::VERBOSE;
 
     int logStreamCount = static_cast<int>(ELog::_COUNT);
-
     for (int i = 0; i < logStreamCount; ++i)
     {
         m_logStreams[i].init(static_cast<ELog>(i));
@@ -24,7 +25,7 @@ void CLogger::setLogLevel(ELog logLevel)
     m_logLevel = logLevel;
 }
 
-CLogStream CLogger::operator()(ELog logLevel)
+CLogStream& CLogger::operator()(ELog logLevel)
 {
     if (logLevel == ELog::SILENT)
     {

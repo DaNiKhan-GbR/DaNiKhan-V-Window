@@ -1,5 +1,6 @@
 #include "dnnTracker.hpp"
 #include "resources.hpp"
+#include "logger.hpp"
 
 #include <iostream>
 
@@ -15,7 +16,7 @@ bool CDnnTracker::init()
     try {
         m_dnnNet = cv::dnn::readNetFromCaffe(prototxt.cbegin(), prototxt.size(), caffemodel.cbegin(), caffemodel.size());
     } catch (cv::Exception& e) {
-        std::cerr << "Couldn't load DNN data: " << e.msg << "\n";
+        logger(ELog::ERROR) << "Couldn't load DNN data: " << e.msg;
         return false;
     }
 

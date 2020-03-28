@@ -2,11 +2,24 @@
 #include "constants.hpp"
 #include "haarTracker.hpp"
 #include "dnnTracker.hpp"
+#include "logger.hpp"
 
 #include <cmath>
 #include <cstring>
+#include <opencv2/core/utils/logger.hpp>
 
 using dnkvw::CDnkvwContext;
+
+CDnkvwContext::CDnkvwContext()
+{
+    #ifdef NDEBUG // NDEBUG = NOT DEBUG
+        cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_SILENT);
+        logger.setLogLevel(ELog::WARNING);
+    #else
+        cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_WARNING);
+        logger.setLogLevel(ELog::VERBOSE);
+    #endif
+}
 
 bool CDnkvwContext::selectHaarTracker()
 {
@@ -20,6 +33,7 @@ bool CDnkvwContext::selectDnnTracker()
 
 bool CDnkvwContext::startTracking(int cameraId)
 {
+    logger(ELog::VERBOSE) << "Starting tracking...";
     m_winCalc.start(cameraId);
 
     return true; // TODO implement a correct success status
@@ -61,11 +75,13 @@ void CDnkvwContext::loadFrustum(float *left, float *right, float *top, float *bo
 
 void CDnkvwContext::debugCameraInput(int cameraId)
 {
+    logger(ELog::VERBOSE) << "DEBUG Input";
     m_winCalc.debugCameraInput(cameraId);
 }
 
 void CDnkvwContext::debugCameraFace(int cameraId)
 {
+    logger(ELog::VERBOSE) << "DEBUG Tracking";
     m_winCalc.debugCameraFace(cameraId);
 }
 

@@ -1,5 +1,6 @@
 #include "haarTracker.hpp"
 #include "resources.hpp"
+#include "logger.hpp"
 
 #include <iostream>
 
@@ -15,7 +16,7 @@ bool CHaarTracker::init()
     
     if (!m_faceCascade.read(cvHaarFs.getFirstTopLevelNode()))
     {
-        std::cerr << "Couldn't load haar cascade.\n";
+        logger(ELog::ERROR) << "Couldn't load haar cascade.\n";
         return false;
     }
 

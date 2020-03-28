@@ -14,6 +14,8 @@ namespace dnkvw
     class CDnkvwContext : public IDnkvwContext
     {
         public:
+    	    CDnkvwContext();
+
             bool selectHaarTracker();
             bool selectDnnTracker();
 

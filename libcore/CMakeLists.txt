@@ -39,6 +39,8 @@ add_library(${PROJECT_NAME} SHARED
     include/fpsTimer.hpp
     src/vec3.cpp
     include/vec3.hpp
+    src/logger.cpp
+    include/logger.hpp
 
     ${DNKVW_EXTRA_SOURCES}
 )

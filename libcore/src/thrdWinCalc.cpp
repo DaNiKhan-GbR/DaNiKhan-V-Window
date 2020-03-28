@@ -1,5 +1,8 @@
 #include "thrdWinCalc.hpp"
 #include "constants.hpp"
+#include "logger.hpp"
+
+#include <sstream>
 
 using dnkvw::CThreadedWindowCalculator;
 
@@ -184,14 +187,20 @@ void CThreadedWindowCalculator::initVideoCapture(int cameraId)
         if (::fabs(m_videoCapture.get(cv::CAP_PROP_FRAME_WIDTH) - constant::capture::targetWidth) > 0.1f || 
             ::fabs(m_videoCapture.get(cv::CAP_PROP_FRAME_HEIGHT) - constant::capture::targetHeight) > 0.1f) 
         {
-            std::cout << "WARNING: Camera resolution doesn't match target resolution of " << constant::capture::targetWidth 
-                    << "x" << constant::capture::targetHeight << ". Tracking results may be wrong." << std::endl;
+            std::ostringstream warning;
+            warning << "WARNING: Camera resolution doesn't match target resolution of " << constant::capture::targetWidth 
+                    << "x" << constant::capture::targetHeight << ". Tracking results may be wrong.";
+
+            logger(ELog::WARNING) << warning.str();
         }
 
         if (::fabs(m_videoCapture.get(cv::CAP_PROP_FPS) - constant::capture::targetFps) > 0.1f) 
         {
-            std::cout << "WARNING: Camera framerate doesn't match target framerate of " << constant::capture::targetFps 
+            std::ostringstream warning;
+            warning << "WARNING: Camera framerate doesn't match target framerate of " << constant::capture::targetFps 
                     << "fps. Tracking results may be wrong." << std::endl;
+            
+            logger(ELog::WARNING) << warning.str();
         }
     }
 }
@@ -200,6 +209,7 @@ void CThreadedWindowCalculator::processingLoop(int cameraId)
 {
     // Init
     initVideoCapture(cameraId);
+    logger(ELog::VERBOSE) << "Starting tracking... done";
 
     // Processing Loop
     while (!m_signal_stop)

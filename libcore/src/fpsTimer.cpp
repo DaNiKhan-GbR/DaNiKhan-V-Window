@@ -14,6 +14,7 @@ float CFpsTimer::stop()
     auto deltaTime = std::chrono::duration_cast<ms>(end - m_start).count();
     float fps = 1000.0f / deltaTime;
 
+    // Moving average to smooth the output
     m_avgFps = m_alpha * m_avgFps + (1.0f - m_alpha) * fps;
 
     return m_avgFps;

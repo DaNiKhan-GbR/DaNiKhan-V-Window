@@ -10,6 +10,7 @@ CThreadedWindowCalculator::~CThreadedWindowCalculator()
 {
     if (m_threadRunning.load())
     {
+        logger(ELog::VERBOSE) << "Automatically stopping tracking at end of lifetime.";
         this->stop();
     }
 }
@@ -18,8 +19,13 @@ void CThreadedWindowCalculator::start(int cameraId)
 {
     if (!m_threadRunning.load())
     {
+        logger(ELog::VERBOSE) << "Starting tracking...";
         m_threadRunning = true;
         m_thread = std::thread([this, cameraId]{ this->processingLoop(cameraId); });
+    }
+    else
+    {
+        logger(ELog::WARNING) << "Cannot start tracking. Tracking already active.";
     }
 }
 
@@ -35,6 +41,7 @@ void CThreadedWindowCalculator::stop()
 
 void CThreadedWindowCalculator::stopAsync()
 {
+    logger(ELog::VERBOSE) << "Stopping tracking...";
     m_signal_stop = true;
 }
 
@@ -55,6 +62,7 @@ void CThreadedWindowCalculator::storeSettings(dnkvw::CWindowSettings settings)
 
 void CThreadedWindowCalculator::signalCalibrate()
 {
+    logger(ELog::VERBOSE) << "Signal calibration.";
     m_signal_calibrate = true;
 }
 
@@ -63,17 +71,21 @@ bool CThreadedWindowCalculator::selectTracker(std::unique_ptr<dnkvw::ITracker> t
     if (tracker->init())
     {
         m_tracker = std::move(tracker);
+        logger(ELog::VERBOSE) << "Tracker changed.";
         return true;
     }
+    else
+    {
+        logger(ELog::ERROR) << "Couldn't initialise tracker!";
+    }
+    
 
     return false;
 }
 
 void CThreadedWindowCalculator::debugCameraInput(int cameraId)
 {
-    initVideoCapture(cameraId);
-
-    if (!m_videoCapture.isOpened())
+    if (!initVideoCapture(cameraId))
     {
         return;
     }
@@ -113,9 +125,7 @@ void CThreadedWindowCalculator::debugCameraInput(int cameraId)
 
 void CThreadedWindowCalculator::debugCameraFace(int cameraId)
 {
-    initVideoCapture(cameraId);
-
-    if (!m_videoCapture.isOpened() || !m_tracker)
+    if (!initVideoCapture(cameraId) || !m_tracker)
     {
         return;
     }
@@ -169,7 +179,7 @@ void CThreadedWindowCalculator::faceToEye(const cv::Rect& face, const float fram
     eye[2] = 100.0f / (float)face.width;
 }
 
-void CThreadedWindowCalculator::initVideoCapture(int cameraId)
+bool CThreadedWindowCalculator::initVideoCapture(int cameraId)
 {
     bool success;
 #ifdef _WIN32
@@ -203,12 +213,24 @@ void CThreadedWindowCalculator::initVideoCapture(int cameraId)
             logger(ELog::WARNING) << warning.str();
         }
     }
+    else
+    {
+        logger(ELog::ERROR) << "Couldn't open video capture devide!";
+    }
+    
+    return success && m_videoCapture.isOpened();
 }
 
 void CThreadedWindowCalculator::processingLoop(int cameraId)
 {
     // Init
-    initVideoCapture(cameraId);
+    if (!initVideoCapture(cameraId))
+    {
+        // TODO Signal failure to calling thread
+        m_threadRunning = false;
+        return;
+    }
+
     logger(ELog::VERBOSE) << "Starting tracking... done";
 
     // Processing Loop
@@ -227,6 +249,7 @@ void CThreadedWindowCalculator::processingLoop(int cameraId)
 
     // Cleanup
     m_videoCapture.release();
+    logger(ELog::VERBOSE) << "Stopping tracking... done";
     m_threadRunning = false;
 }
 
@@ -234,8 +257,11 @@ void CThreadedWindowCalculator::calibrate()
 {
     if (!m_videoCapture.isOpened())
     {
+        logger(ELog::ERROR) << "Calibration: Video Capture unexpectedly not open.";
         return;
     }
+
+    logger(ELog::VERBOSE) << "Calibration...";
 
     cv::Mat frame;
     std::vector<cv::Rect> faces;
@@ -269,6 +295,8 @@ void CThreadedWindowCalculator::calibrate()
         m_eyeOffset = -eyeAvg;
         m_eyeOffset[2] = eyeAvg[2]; // TODO Mal schauen, aber richtig hart
     }
+
+    logger(ELog::VERBOSE) << "Calibration... done";
 }
 
 void CThreadedWindowCalculator::calcWindow()
@@ -276,6 +304,7 @@ void CThreadedWindowCalculator::calcWindow()
     m_fpsTimer.start();
     if (!m_videoCapture.isOpened())
     {
+        logger(ELog::ERROR) << "Calc Window: Video Capture unexpectedly not open.";
         return;
     }
 

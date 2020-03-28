@@ -68,7 +68,7 @@ namespace dnkvw
 
         private:
             void faceToEye(const cv::Rect& face, const float frameWidth, const float frameHeight, Vec3& eye);
-            void initVideoCapture(int cameraId);
+            bool initVideoCapture(int cameraId);
             void processingLoop(int cameraId);
             void calibrate();
             void calcWindow();

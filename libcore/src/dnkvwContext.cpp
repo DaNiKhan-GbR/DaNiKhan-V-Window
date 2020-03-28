@@ -95,7 +95,6 @@ bool CDnkvwContext::selectDnnTracker()
 
 bool CDnkvwContext::startTracking(int cameraId)
 {
-    logger(ELog::VERBOSE) << "Starting tracking...";
     m_winCalc.start(cameraId);
 
     return true; // TODO implement a correct success status

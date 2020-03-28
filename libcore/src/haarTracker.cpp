@@ -36,8 +36,3 @@ std::optional<cv::Rect> CHaarTracker::trackFrame(cv::Mat& inputFrame)
 
     return std::nullopt;
 }
-
-void CHaarTracker::cleanup()
-{
-    // Do nothing
-}

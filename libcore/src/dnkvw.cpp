@@ -5,16 +5,13 @@ extern "C" {
 
     DNKVW_API IDnkvwHandle dnkvw_createContext()
     {
-        IDnkvwHandle newHandle = new dnkvw::CDnkvwContext;
-        newHandle->__init();
-        return newHandle;
+        return new dnkvw::CDnkvwContext;
     }
 
     DNKVW_API void dnkvw_freeContext(IDnkvwHandle* context)
     {
         if (*context != nullptr)
         {
-            (*context)->__cleanup();
             delete *context;
             *context = nullptr;
         }

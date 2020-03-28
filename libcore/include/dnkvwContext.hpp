@@ -14,9 +14,6 @@ namespace dnkvw
     class CDnkvwContext : public IDnkvwContext
     {
         public:
-            void __init();
-            void __cleanup();
-
             bool selectHaarTracker();
             bool selectDnnTracker();
 

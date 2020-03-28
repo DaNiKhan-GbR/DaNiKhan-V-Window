@@ -2,6 +2,7 @@
 
 #include <thread>
 #include <atomic>
+#include <memory>
 #include <opencv2/opencv.hpp>
 
 #include "fpsTimer.hpp"
@@ -60,7 +61,7 @@ namespace dnkvw
             void storeSettings(CWindowSettings settings);
             void signalCalibrate();
 
-            bool selectTracker(ITracker *tracker);
+            bool selectTracker(std::unique_ptr<ITracker> tracker);
 
             void debugCameraInput(int cameraId);
             void debugCameraFace(int cameraId);
@@ -73,7 +74,7 @@ namespace dnkvw
             void calcWindow();
 
             cv::VideoCapture m_videoCapture;
-            ITracker *m_tracker;
+            std::unique_ptr<ITracker> m_tracker;
             CFpsTimer m_fpsTimer;
             Vec3 m_eyeOffset;
             Vec3 m_eyeAvg;

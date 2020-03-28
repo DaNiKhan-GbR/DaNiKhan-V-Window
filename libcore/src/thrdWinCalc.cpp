@@ -9,12 +9,6 @@ CThreadedWindowCalculator::~CThreadedWindowCalculator()
     {
         this->stop();
     }
-
-    if (m_tracker)
-    {
-        m_tracker->cleanup();
-        delete m_tracker;
-    }
 }
 
 void CThreadedWindowCalculator::start(int cameraId)
@@ -61,24 +55,15 @@ void CThreadedWindowCalculator::signalCalibrate()
     m_signal_calibrate = true;
 }
 
-bool CThreadedWindowCalculator::selectTracker(dnkvw::ITracker* tracker)
+bool CThreadedWindowCalculator::selectTracker(std::unique_ptr<dnkvw::ITracker> tracker)
 {
     if (tracker->init())
     {
-        if (m_tracker)
-        {
-            m_tracker->cleanup();
-            delete m_tracker;
-        }
-
-        m_tracker = tracker;
+        m_tracker = std::move(tracker);
         return true;
     }
-    else
-    {
-        delete tracker;
-        return false;
-    }
+
+    return false;
 }
 
 void CThreadedWindowCalculator::debugCameraInput(int cameraId)

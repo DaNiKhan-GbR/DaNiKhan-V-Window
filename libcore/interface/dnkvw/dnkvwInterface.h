@@ -13,9 +13,6 @@ struct IDnkvwContext
 {
     virtual ~IDnkvwContext() {}
 
-    virtual void __init() = 0;
-    virtual void __cleanup() = 0;
-
     virtual bool selectHaarTracker() = 0;
     virtual bool selectDnnTracker() = 0;
 

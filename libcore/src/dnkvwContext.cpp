@@ -8,24 +8,14 @@
 
 using dnkvw::CDnkvwContext;
 
-void CDnkvwContext::__init()
-{
-    // TODO not needed??
-}
-
-void CDnkvwContext::__cleanup()
-{
-    // TODO not needed??
-}
-
 bool CDnkvwContext::selectHaarTracker()
 {
-    return m_winCalc.selectTracker(new CHaarTracker);
+    return m_winCalc.selectTracker(std::make_unique<CHaarTracker>());
 }
 
 bool CDnkvwContext::selectDnnTracker()
 {
-    return m_winCalc.selectTracker(new CDnnTracker);
+    return m_winCalc.selectTracker(std::make_unique<CDnnTracker>());
 }
 
 bool CDnkvwContext::startTracking(int cameraId)

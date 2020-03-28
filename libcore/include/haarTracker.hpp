@@ -10,7 +10,6 @@ namespace dnkvw
         public:
             bool init();
             std::optional<cv::Rect> trackFrame(cv::Mat& inputFrame);
-            void cleanup();
 
         private:
             cv::CascadeClassifier m_faceCascade;

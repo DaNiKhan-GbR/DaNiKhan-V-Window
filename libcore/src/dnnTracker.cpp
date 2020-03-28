@@ -55,8 +55,3 @@ std::optional<cv::Rect> CDnnTracker::trackFrame(cv::Mat& inputFrame)
 
     return std::nullopt;
 }
-
-void CDnnTracker::cleanup()
-{
-    // Do nothing
-}

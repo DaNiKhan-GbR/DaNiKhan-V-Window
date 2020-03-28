@@ -177,20 +177,20 @@ void CThreadedWindowCalculator::initVideoCapture(int cameraId)
 
     if (success)
     {
-        m_videoCapture.set(cv::CAP_PROP_FRAME_WIDTH, dnkvw::constant::targetWidth);
-        m_videoCapture.set(cv::CAP_PROP_FRAME_HEIGHT, dnkvw::constant::targetHeight);
-        m_videoCapture.set(cv::CAP_PROP_FPS, dnkvw::constant::targetFps);
+        m_videoCapture.set(cv::CAP_PROP_FRAME_WIDTH, constant::capture::targetWidth);
+        m_videoCapture.set(cv::CAP_PROP_FRAME_HEIGHT, constant::capture::targetHeight);
+        m_videoCapture.set(cv::CAP_PROP_FPS, constant::capture::targetFps);
 
-        if (::fabs(m_videoCapture.get(cv::CAP_PROP_FRAME_WIDTH) - dnkvw::constant::targetWidth) > 0.1f || 
-            ::fabs(m_videoCapture.get(cv::CAP_PROP_FRAME_HEIGHT) - dnkvw::constant::targetHeight) > 0.1f) 
+        if (::fabs(m_videoCapture.get(cv::CAP_PROP_FRAME_WIDTH) - constant::capture::targetWidth) > 0.1f || 
+            ::fabs(m_videoCapture.get(cv::CAP_PROP_FRAME_HEIGHT) - constant::capture::targetHeight) > 0.1f) 
         {
-            std::cout << "WARNING: Camera resolution doesn't match target resolution of " << dnkvw::constant::targetWidth 
-                    << "x" << dnkvw::constant::targetHeight << ". Tracking results may be wrong." << std::endl;
+            std::cout << "WARNING: Camera resolution doesn't match target resolution of " << constant::capture::targetWidth 
+                    << "x" << constant::capture::targetHeight << ". Tracking results may be wrong." << std::endl;
         }
 
-        if (::fabs(m_videoCapture.get(cv::CAP_PROP_FPS) - dnkvw::constant::targetFps) > 0.1f) 
+        if (::fabs(m_videoCapture.get(cv::CAP_PROP_FPS) - constant::capture::targetFps) > 0.1f) 
         {
-            std::cout << "WARNING: Camera framerate doesn't match target framerate of " << dnkvw::constant::targetFps 
+            std::cout << "WARNING: Camera framerate doesn't match target framerate of " << constant::capture::targetFps 
                     << "fps. Tracking results may be wrong." << std::endl;
         }
     }
@@ -213,8 +213,6 @@ void CThreadedWindowCalculator::processingLoop(int cameraId)
         {
             this->calcWindow();
         }
-
-        // std::this_thread::yield(); // TODO check if relevant?
     }
 
     // Cleanup
@@ -224,10 +222,6 @@ void CThreadedWindowCalculator::processingLoop(int cameraId)
 
 void CThreadedWindowCalculator::calibrate()
 {
-    // TODO as a real constant
-    constexpr int targetFaceCount = 10;
-    constexpr int maxFaceTries = 50;
-
     if (!m_videoCapture.isOpened())
     {
         return;
@@ -237,7 +231,7 @@ void CThreadedWindowCalculator::calibrate()
     std::vector<cv::Rect> faces;
 
     int tryCount = 0;
-    while (faces.size() < targetFaceCount && tryCount < maxFaceTries)
+    while (faces.size() < constant::calib::targetFaceCount && tryCount < constant::calib::maxFaceTries)
     {
         tryCount++;
         m_videoCapture >> frame;
@@ -249,7 +243,7 @@ void CThreadedWindowCalculator::calibrate()
         }
     }
 
-    if (faces.size() >= targetFaceCount / 2)
+    if (faces.size() >= constant::calib::targetFaceCount / 2)
     {
         Vec3 eyeAvg;
 
@@ -288,7 +282,7 @@ void CThreadedWindowCalculator::calcWindow()
         faceToEye(face, (float)frame.cols, (float)frame.rows, eye);
         eye += m_eyeOffset;
 
-        constexpr float eyeAvgFactor = dnkvw::constant::eyeAvgFactor;
+        constexpr float eyeAvgFactor = constant::frustum::eyeAvgFactor;
         m_eyeAvg = m_eyeAvg * (1.0f - eyeAvgFactor) + eye * eyeAvgFactor;
 
         Vec3 pa(-settings.aspect, -1, 0);

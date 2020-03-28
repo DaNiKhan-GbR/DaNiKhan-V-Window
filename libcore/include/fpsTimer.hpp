@@ -9,7 +9,7 @@ namespace dnkvw
     class CFpsTimer
     {
         public:
-            CFpsTimer(float alpha = 0.5f) : m_alpha(alpha), m_avgFps(constant::targetFps) {}
+            CFpsTimer(float alpha = 0.5f) : m_alpha(alpha), m_avgFps(constant::capture::targetFps) {}
             void start();
             float stop();
 

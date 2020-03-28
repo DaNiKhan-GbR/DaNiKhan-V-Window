@@ -21,6 +21,68 @@ CDnkvwContext::CDnkvwContext()
     #endif
 }
 
+void CDnkvwContext::setLogLevel(int logLevel)
+{
+    if (m_winCalc.isRunning())
+    {
+        logger(ELog::WARNING) << "Cannot set a new log level while tracking is active!";
+        return;
+    }
+
+    ELog level;
+
+    switch (logLevel)
+    {
+        case DNKVW_LOG_LEVEL_SILENT:
+            level = ELog::SILENT;
+            break;
+            
+        case DNKVW_LOG_LEVEL_ERROR:
+            level = ELog::ERROR;
+            break;
+        
+        case DNKVW_LOG_LEVEL_WARNING:
+            level = ELog::WARNING;
+            break;
+
+        case DNKVW_LOG_LEVEL_VERBOSE:
+            level = ELog::VERBOSE;
+            break;
+
+        default:
+            logger(ELog::WARNING) << "Unkown log level!";
+            return;
+    }
+
+    logger.setLogLevel(level);
+}
+
+void CDnkvwContext::setInternalLogLevel(int internalLogLevel)
+{
+    cv::utils::logging::LogLevel level;
+
+    switch (internalLogLevel)
+    {
+        case DNKVW_INTERNAL_LOG_LEVEL_SILENT:
+            level = cv::utils::logging::LOG_LEVEL_SILENT;
+            break;
+            
+        case DNKVW_INTERNAL_LOG_LEVEL_IMPORTANT:
+            level = cv::utils::logging::LOG_LEVEL_WARNING;
+            break;
+
+        case DNKVW_INTERNAL_LOG_LEVEL_VERBOSE:
+            level = cv::utils::logging::LOG_LEVEL_VERBOSE;
+            break;
+
+        default:
+            logger(ELog::WARNING) << "Unkown internal log level!";
+            return;
+    }
+
+    cv::utils::logging::setLogLevel(level);
+}
+
 bool CDnkvwContext::selectHaarTracker()
 {
     return m_winCalc.selectTracker(std::make_unique<CHaarTracker>());

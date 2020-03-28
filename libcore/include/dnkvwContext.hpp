@@ -16,6 +16,9 @@ namespace dnkvw
         public:
     	    CDnkvwContext();
 
+            void setLogLevel(int logLevel);
+            void setInternalLogLevel(int internalLogLevel);
+
             bool selectHaarTracker();
             bool selectDnnTracker();
 

@@ -26,6 +26,9 @@ extern "C" {
     DNKVW_API IDnkvwHandle dnkvw_createContext();
     DNKVW_API void dnkvw_freeContext(IDnkvwHandle* context);
 
+    DNKVW_API void dnkvw_setLogLevel(IDnkvwHandle context, int logLevel);
+    DNKVW_API void dnkvw_setInternalLogLevel(IDnkvwHandle context, int internalLogLevel);
+
     DNKVW_API void dnkvw_selectHaarTracker(IDnkvwHandle context);
     DNKVW_API void dnkvw_selectDnnTracker(IDnkvwHandle context);
 

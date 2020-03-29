@@ -44,14 +44,26 @@
 
 namespace dnkvw 
 {
-
+    /**
+     * Haar cascade face tracker class.
+     * Implements the ITracker interface.
+     */
     class CHaarTracker : public ITracker
     {
         public:
+            /**
+             * Loads the haar cascade from the resource filesystem.
+             * 
+             * @return true, if the import was successfull, false if not
+             */
             bool init();
+            
             std::optional<cv::Rect> trackFrame(cv::Mat& inputFrame);
 
         private:
+            /**
+             * The loaded haar cascade.
+             */
             cv::CascadeClassifier m_faceCascade;
     };
 

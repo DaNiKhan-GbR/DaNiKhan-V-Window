@@ -46,12 +46,32 @@
 
 namespace dnkvw 
 {
+    /**
+     * This is the face tracker interface.
+     */
     class ITracker
     {
         public:
+            /**
+             * Virtual destructor for overriding by subclasses.
+             */
             virtual ~ITracker() {};
             
+            /**
+             * The init method get's called once at the start of the lifetime.
+             * Required initializations are done here.
+             * 
+             * @return true, if the initialization was successfull, false if not
+             */
             virtual bool init() = 0;
+
+            /**
+             * This method searches a face in the input frame and
+             * returns its coordinates if it was found.
+             * 
+             * @param inputFrame the input image frame
+             * @return the coordinates of the found dace, the optional is empty if no face was found
+             */
             virtual std::optional<cv::Rect> trackFrame(cv::Mat& inputFrame) = 0;
     };
 }

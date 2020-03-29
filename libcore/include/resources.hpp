@@ -42,4 +42,5 @@
 
 #include <cmrc/cmrc.hpp>
 
+// Declares the cmrc dnkvw_rs namespace
 CMRC_DECLARE(dnkvw_rc);

@@ -44,14 +44,26 @@
 
 namespace dnkvw 
 {
-
+    /**
+     * DNN face tracker class.
+     * Implements the ITracker interface.
+     */
     class CDnnTracker : public ITracker
     {
         public:
+            /**
+             * Loads the DNN from the resource filesystem.
+             * 
+             * @return true, if the import was successfull, false if not
+             */
             bool init();
+
             std::optional<cv::Rect> trackFrame(cv::Mat& inputFrame);
 
         private:
+            /**
+             * The loaded dnn.
+             */
             cv::dnn::Net m_dnnNet;
     };
 

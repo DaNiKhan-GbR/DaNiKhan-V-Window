@@ -54,6 +54,12 @@ namespace dnkvw
     class CDnkvwContext : public IDnkvwContext
     {
         public:
+            /**
+             * This constructor initializes the context.
+             * 
+             * Side-effect: The OpenCV Logger and the dnkvw Logger log levels
+             * are set to the defaults for the active build configuration.
+             */
     	    CDnkvwContext();
 
             void setLogLevel(int logLevel);
@@ -73,6 +79,9 @@ namespace dnkvw
             void debugCameraFace(int cameraId);
 
         private:
+            /**
+             * The multithreaded window calculator for this context.
+             */
             CThreadedWindowCalculator m_winCalc;
     };
 

@@ -19,6 +19,10 @@ You can find precompiled versions here...
 
 Very simple to use and so on ...
 
+Logigng defaults:
+* Debug: Dnkvw = Verbose, Internal = Silent
+* Release: Dnkvw = Warning, internal = Silent
+
 ## Building
 
 ### Requirements

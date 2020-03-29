@@ -1,18 +1,32 @@
+###############################################################################
+# DaNiKhan Virtual Window (dnkvw) devtool Cmake file                          #
+#                                                                             #
+# This is a sub cmake file for the dnkvw library.                             #
+# DO NOT USE THIS DIRECTLY AS A CMAKE PROJECT.                                #
+# ONLY USE THE MAIN CMakeLists.txt!                                           #
+#                                                                             #
+# In-Source builds are explicitly disabled!                                   #
+# Please refere to the README.md for build instructions.                      #
+###############################################################################
+
 project(dnkvw CXX)
 
+# Add the required resources to the binary.
 cmrc_add_resource_library(dnkvw_resources ALIAS dnkvw::rc NAMESPACE dnkvw_rc
     data/dnn.caffemodel
     data/dnn.prototxt
     data/haarcascade_frontalface_default.xml
 )
 
+# Set dnkvw meta informations. 
 set(DNKVW_EXTRA_SOURCES )
 set(DNKVW_COMPANY DaNiKhan)
 set(DNKVW_DESCRIPTION "DaNiKhan Virtual Window Library")
 set(DNKVW_PRODUCTNAME "DaNiKhan V-Window")
 set(DNKVW_COPYRIGHT "(C) 2020, Daniel Klintworth and Nicolas Hollmann")
-set(DNKVW_FILENAME dnkvw.dll)
+set(DNKVW_FILENAME dnkvw.dll) # Windows specific
 
+# Only add resource file if MSVC is used.
 if(MSVC)
     configure_file(
         ${PROJECT_SOURCE_DIR}/version.rc.in
@@ -22,6 +36,7 @@ if(MSVC)
     list(APPEND DNKVW_EXTRA_SOURCES ${CMAKE_BINARY_DIR}/_winrc/version.rc)
 endif()
 
+# The library itself.
 add_library(${PROJECT_NAME} SHARED
     src/dnkvw.cpp
     src/dnkvwContext.cpp
@@ -45,6 +60,9 @@ add_library(${PROJECT_NAME} SHARED
     ${DNKVW_EXTRA_SOURCES}
 )
 
+# Output a warning if the shared version of OpenCV is used.
+# The static variant is preferred because the final binary
+# is self included without further dependencies.
 if(OpenCV_SHARED)
     message(WARNING " The selected OpenCV version is built as a shared library.\n"
                     " You can use it, but you always need to deploy the\n"
@@ -58,13 +76,18 @@ endif()
 
 add_feature_info("Static OpenCV" "NOT ${OpenCV_SHARED}" "linking OpenCV as a static library.")
 
-
+# Add all needed include directories.
 target_include_directories(${PROJECT_NAME} PRIVATE ${OpenCV_INCLUDE_DIRS})
 target_include_directories(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/include")
 target_include_directories(${PROJECT_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/interface")
 
+# Link with all required libraries.
 target_link_libraries(${PROJECT_NAME} PRIVATE ${CMAKE_THREAD_LIBS_INIT} ${OpenCV_LIBS} dnkvw::rc)
 
+# TODO: Maybe an option for /MT /MD /MTd /MDd ?? Let the user decide?
 #set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
 
+# Set the export define.
 target_compile_definitions(${PROJECT_NAME} PRIVATE DNKVW_WIN_EXPORT)
+
+# END OF FILE

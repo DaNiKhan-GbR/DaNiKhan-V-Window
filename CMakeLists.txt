@@ -17,7 +17,7 @@ FATAL: In-source builds are not allowed.
 ")
 endif()
 
-project("DaNiKhan VWindow" CXX)
+project("DaNiKhan VWindow" LANGUAGES CXX VERSION 1.0.0)
 
 # Default to Release if no build type was specified.
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -30,6 +30,8 @@ endif()
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 include(CMakeRC)
 include(FeatureSummary)
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
 
 # We need C++17 for dnkvw.
 set(CMAKE_CXX_STANDARD 17)
@@ -38,6 +40,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Reconfigure the output directoy.
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+
+# Set a postfix for debug builds.
+set(CMAKE_DEBUG_POSTFIX "d")
 
 # Find Threads package.
 find_package(Threads REQUIRED)
@@ -53,6 +58,31 @@ set_package_properties(OpenCV PROPERTIES
     TYPE REQUIRED
     PURPOSE "Required for all image processing and video capturing tasks."
 )
+
+# Begin of RPath Helper
+
+# Always full RPATH (for shared libraries)
+#  https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/RPATH-handling
+
+# use the full RPATH for the build tree
+set(CMAKE_SKIP_BUILD_RPATH FALSE)
+
+# when building, don't use the install RPATH already
+# (but later on when installing)
+set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
+set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+
+# add the automatically determined parts of the RPATH
+# which point to directories outside the build tree to the install RPATH
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+# the RPATH to be used when installing, but only if it's not a system directory
+list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" isSystemDir)
+if("${isSystemDir}" STREQUAL "-1")
+    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+endif()
+
+# End of RPATH helper.
 
 # Add the project subdirectories
 add_subdirectory(libcore)

@@ -9,7 +9,10 @@
 # Please refere to the README.md for build instructions.                      #
 ###############################################################################
 
-project(dnkvw CXX)
+project(dnkvw 
+    LANGUAGES CXX 
+    VERSION 1.0.0
+)
 
 # Add the required resources to the binary.
 cmrc_add_resource_library(dnkvw_resources ALIAS dnkvw::rc NAMESPACE dnkvw_rc
@@ -60,6 +63,13 @@ add_library(${PROJECT_NAME} SHARED
     ${DNKVW_EXTRA_SOURCES}
 )
 
+# The public interface.
+set(PUBLIC_INTERFACE
+    interface/dnkvw/dnkvw.h
+    interface/dnkvw/dnkvwInterface.h
+)
+set(PUBLIC_INTERFACE_DIR "${PROJECT_SOURCE_DIR}/interface")
+
 # Output a warning if the shared version of OpenCV is used.
 # The static variant is preferred because the final binary
 # is self included without further dependencies.
@@ -79,7 +89,10 @@ add_feature_info("Static OpenCV" "NOT ${OpenCV_SHARED}" "linking OpenCV as a sta
 # Add all needed include directories.
 target_include_directories(${PROJECT_NAME} PRIVATE ${OpenCV_INCLUDE_DIRS})
 target_include_directories(${PROJECT_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/include")
-target_include_directories(${PROJECT_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/interface")
+target_include_directories(${PROJECT_NAME} PUBLIC 
+   "$<BUILD_INTERFACE:${PUBLIC_INTERFACE_DIR}>"
+   "$<INSTALL_INTERFACE:.>"
+)
 
 # Link with all required libraries.
 target_link_libraries(${PROJECT_NAME} PRIVATE ${CMAKE_THREAD_LIBS_INIT} ${OpenCV_LIBS} dnkvw::rc)
@@ -89,5 +102,73 @@ target_link_libraries(${PROJECT_NAME} PRIVATE ${CMAKE_THREAD_LIBS_INIT} ${OpenCV
 
 # Set the export define.
 target_compile_definitions(${PROJECT_NAME} PRIVATE DNKVW_WIN_EXPORT)
+
+# Configure paths.
+set(CONFIG_INSTALL_DIR  "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
+set(GENERATED_DIR       "${CMAKE_BINARY_DIR}/generated")
+set(VERSION_CONFIG_FILE "${GENERATED_DIR}/${PROJECT_NAME}ConfigVersion.cmake")
+set(PROJECT_CONFIG_FILE "${GENERATED_DIR}/${PROJECT_NAME}Config.cmake")
+set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
+
+# Configure '<PROJECT-NAME>ConfigVersion.cmake'
+write_basic_package_version_file(
+    "${VERSION_CONFIG_FILE}"
+    VERSION "${${PROJECT_NAME}_VERSION}"
+    COMPATIBILITY SameMajorVersion
+)
+
+# Configure '<PROJECT-NAME>Config.cmake'
+configure_package_config_file(
+    "${CMAKE_SOURCE_DIR}/cmake/Config.cmake.in"
+    "${PROJECT_CONFIG_FILE}"
+    INSTALL_DESTINATION "${CONFIG_INSTALL_DIR}"
+)
+
+# Uninstall targets
+configure_file(
+    "${CMAKE_SOURCE_DIR}/cmake/Uninstall.cmake.in"
+    "${GENERATED_DIR}/Uninstall.cmake"
+    IMMEDIATE @ONLY
+)
+
+add_custom_target(uninstall
+    COMMAND ${CMAKE_COMMAND} -P ${GENERATED_DIR}/Uninstall.cmake
+)
+
+# Install config.
+install(
+    TARGETS                 "${PROJECT_NAME}"
+    EXPORT                  "${TARGETS_EXPORT_NAME}"
+    LIBRARY DESTINATION     "${CMAKE_INSTALL_LIBDIR}"
+    ARCHIVE DESTINATION     "${CMAKE_INSTALL_LIBDIR}"
+    RUNTIME DESTINATION     "${CMAKE_INSTALL_BINDIR}"
+    INCLUDES DESTINATION    "${CMAKE_INSTALL_INCLUDEDIR}"
+)
+
+# Install public interface
+install(
+    FILES ${PUBLIC_INTERFACE}
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
+)
+
+# Install Cmake Config
+#   - <prefix>/lib/cmake/dnkvw/dnkvwConfig.cmake
+#   - <prefix>/lib/cmake/dnkvw/dnkvwConfigVersion.cmake
+install(
+    FILES       "${PROJECT_CONFIG_FILE}"
+                "${VERSION_CONFIG_FILE}"
+    DESTINATION "${CONFIG_INSTALL_DIR}"
+)
+
+# Install Cmake Target Config
+#   - <prefix>/lib/cmake/dnkvw/dnkvwTargets.cmake
+install(
+  EXPORT      "${TARGETS_EXPORT_NAME}"
+  FILE        "${PROJECT_NAME}Targets.cmake"
+  DESTINATION "${CONFIG_INSTALL_DIR}"
+)
+
+# Support for cmake registry.
+include(CMakeRegistry)
 
 # END OF FILE

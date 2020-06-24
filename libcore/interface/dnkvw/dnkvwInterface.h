@@ -70,7 +70,9 @@ struct IDnkvwContext
 
     virtual void configureFrustum(float aspectRatio, float nearPlane) = 0;
     virtual void calibrate() = 0;
-    virtual void loadFrustum(float *left, float *right, float *top, float *bottom, float *fps = nullptr) = 0;
+    virtual void loadFrustum(float *left, float *right, float *top, float *bottom) = 0;
+    virtual void loadEyeOffset(float *x, float *y, float *z) = 0;
+    virtual void loadFps(float *fps) = 0;
 
     virtual void debugCameraInput(int cameraId) = 0;
     virtual void debugCameraFace(int cameraId) = 0;

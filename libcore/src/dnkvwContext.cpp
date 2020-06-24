@@ -161,18 +161,27 @@ namespace dnkvw {
         m_winCalc.signalCalibrate();
     }
 
-    void CDnkvwContext::loadFrustum(float *left, float *right, float *top, float *bottom, float *fps)
+    void CDnkvwContext::loadFrustum(float *left, float *right, float *top, float *bottom)
     {
         auto result = m_winCalc.obtainLastResult();
         *left = result.left;
         *right = result.right;
         *bottom = result.bottom;
         *top = result.top;
+    }
 
-        if (fps)
-        {
-            *fps = result.fps;
-        }
+    void CDnkvwContext::loadEyeOffset(float *x, float *y, float *z)
+    {
+        auto result = m_winCalc.obtainLastResult();
+        *x = result.eyeOffsetX;
+        *y = result.eyeOffsetY;
+        *z = result.eyeOffsetZ;
+    }
+
+    void CDnkvwContext::loadFps(float *fps)
+    {
+        auto result = m_winCalc.obtainLastResult();
+        *fps = result.fps;
     }
 
     void CDnkvwContext::debugCameraInput(int cameraId)

@@ -64,6 +64,9 @@ namespace dnkvw
         float right;
         float top;
         float bottom;
+        float eyeOffsetX;
+        float eyeOffsetY;
+        float eyeOffsetZ;
         float fps;
     };
 
@@ -77,6 +80,9 @@ namespace dnkvw
                 initRes.right   =  1.0f;
                 initRes.top     =  1.0f;
                 initRes.bottom  = -1.0f;
+                initRes.eyeOffsetX = 0.0f;
+                initRes.eyeOffsetY = 0.0f;
+                initRes.eyeOffsetZ = 0.0f;
                 initRes.fps     =  1.0f;
                 m_lastResult = initRes;
 

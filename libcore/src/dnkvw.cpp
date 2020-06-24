@@ -101,9 +101,19 @@ extern "C" {
         context->calibrate();
     }
 
-    DNKVW_API void dnkvw_loadFrustum(IDnkvwHandle context, float* left, float* right, float* top, float* bottom, float* fps)
+    DNKVW_API void dnkvw_loadFrustum(IDnkvwHandle context, float* left, float* right, float* top, float* bottom)
     {
-        context->loadFrustum(left, right, top, bottom, fps);
+        context->loadFrustum(left, right, top, bottom);
+    }
+
+    DNKVW_API void dnkvw_loadEyeOffset(IDnkvwHandle context, float* x, float* y, float* z)
+    {
+        context->loadEyeOffset(x, y, z);
+    }
+
+    DNKVW_API void dnkvw_loadFps(IDnkvwHandle context, float* fps)
+    {
+        context->loadFps(fps);
     }
 
     DNKVW_API void dnkvw_debugCameraInput(IDnkvwHandle context, int cameraId)

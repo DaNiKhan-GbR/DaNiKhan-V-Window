@@ -218,6 +218,9 @@ namespace dnkvw {
         eye[0] = ((float)(face.x + face.width / 2.0f)) / frameWidth * 2.0f - 1.0f;
         eye[1] = ((float)(face.y + face.height / 4.0f)) / frameHeight * 2.0f - 1.0f; 
         eye[2] = 100.0f / (float)face.width;
+
+        eye[0] *= eye[2];
+        eye[1] *= eye[2]; 
     }
 
     bool CThreadedWindowCalculator::initVideoCapture(int cameraId)
@@ -393,6 +396,9 @@ namespace dnkvw {
             newResult.right = r;
             newResult.bottom = b;
             newResult.top = t;
+            newResult.eyeOffsetX = -m_eyeAvg[0];
+            newResult.eyeOffsetY = -m_eyeAvg[1];
+            newResult.eyeOffsetZ = -m_eyeAvg[2];
 
             m_lastResult = newResult;
         }

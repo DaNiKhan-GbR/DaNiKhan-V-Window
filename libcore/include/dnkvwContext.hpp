@@ -73,7 +73,9 @@ namespace dnkvw
 
             void configureFrustum(float aspectRatio, float nearPlane);
             void calibrate();
-            void loadFrustum(float *left, float *right, float *top, float *bottom, float *fps = nullptr);
+            void loadFrustum(float *left, float *right, float *top, float *bottom);
+            void loadEyeOffset(float *x, float *y, float *z);
+            void loadFps(float *fps);
 
             void debugCameraInput(int cameraId);
             void debugCameraFace(int cameraId);

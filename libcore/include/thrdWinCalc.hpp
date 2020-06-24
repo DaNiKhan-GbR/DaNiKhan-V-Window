@@ -51,28 +51,43 @@
 
 namespace dnkvw
 {
+    /**
+     * Datatype for needed calculator settings. 
+     */
     struct CWindowSettings
     {
-        float aspect;
-        float near;
-        float reseved1; // Dient den umgehen eines pre VS 2015 Update 2 Bugs. :(
+        float aspect;       /* The aspect ratio of the display window */
+        float near;         /* The distance to the nearplane */
+        float reseved1;     /* This avoids a pre VS 2015 Update 2 memory alignment bug. :( */
     };
 
+    /**
+     * Result datatype for calculated head positions.
+     */
     struct CWindowResult 
     {
-        float left;
-        float right;
-        float top;
-        float bottom;
-        float eyeOffsetX;
-        float eyeOffsetY;
-        float eyeOffsetZ;
-        float fps;
+        float left;         /* The left border of the viewing frustum */
+        float right;        /* The right border of the viewing frustum */
+        float top;          /* The top border of the viewing frustum */
+        float bottom;       /* The bottom border of the viewing frustum */
+        float eyeOffsetX;   /* Offset of the eye from the normal camery position on the X axis */
+        float eyeOffsetY;   /* Offset of the eye from the normal camery position on the Y axis */
+        float eyeOffsetZ;   /* Offset of the eye from the normal camery position on the Z axis */
+        float fps;          /* How many frames per second can be archieved with the head tracking */
     };
 
+    /**
+     * A multithreaded virtual window calculator.
+     * To better performance on a multicore CPU all calculations
+     * are done on a second thread which is controlled by a member of this class.
+     */
     class CThreadedWindowCalculator
     {
         public:
+            /**
+             * This constructor initialises a new threaded window calculator.
+             * No thead is started until the start method is called.
+             */
             CThreadedWindowCalculator() : m_thread(), m_fpsTimer(0.5f), m_tracker(nullptr), m_eyeOffset()
             {
                 CWindowResult initRes;

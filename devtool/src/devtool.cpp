@@ -41,8 +41,18 @@
 #include <iostream>
 #include <dnkvw/dnkvw.h>
 
+/**
+ * Ask the user which log level should be used.
+ * 
+ * @param dnkvw a handle to the dnkvw context
+ */
 void logLevelDialog(IDnkvwHandle dnkvw);
 
+/**
+ * Entrypoint and main menu of the Dnkvw Devtool.
+ * 
+ * @return the success state of the tool, always 0
+ */
 int main()
 {
     std::cout << "Dnkvw Devtool\n";

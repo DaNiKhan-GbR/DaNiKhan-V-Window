@@ -1,5 +1,5 @@
 ###############################################################################
-# DaNiKhan Virtual Window (dnkvw) Cmake file                                  #
+# DaNiKhan Virtual Window (dnkvw) CMake file                                  #
 #                                                                             #
 # This is the main cmake file and the enty point for compilation.             #
 #                                                                             #

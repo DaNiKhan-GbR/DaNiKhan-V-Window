@@ -42,6 +42,7 @@
 
 #include <iostream>
 #include <mutex>
+#include <string>
 
 namespace dnkvw 
 {
@@ -88,7 +89,7 @@ namespace dnkvw
             /**
              * The printable name of the log level of this stream.
              */
-            char *m_logLevelName;
+            std::string m_logLevelName;
         
         friend dnkvw::CLogger;
         template <class T> friend void operator<<(CLogStream& logStream, const T& x);

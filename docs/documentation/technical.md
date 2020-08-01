@@ -88,7 +88,7 @@ In our early tests we found it to sometimes produce false positives, identifying
 as faces. Other times it did not recognize faces that had even just a small part occluded. Even when 
 there was only one object in frame, there would be a lot of jitter.
 
-| **Pros** 	                    | **Cons**  	                                    |
+| Pros  	                    | Cons      	                                    |
 |---	                        |---	                                            |
 | Easy to implement  	        | Lots of false positives   	                    |
 | Works real-time  	            | Jittering, unstable tracking 	                    |
@@ -106,7 +106,7 @@ implemented face detection. They enable a faster and more stable face detection 
 Haar Cascades. Since OpenCV also includes already pretrained models for DNNs, they were ultimately the 
 superior choice for this project.
 
-| **Pros**  	                            | **Cons**  	                        |
+| Pros 	                                    | Cons  	                            |
 |---	                                    |---	                                |
 | Most accurate in our tests                | Works really slow in debug builds     | 
 | Runs at real-time on CPU                  | Slightly slower than Haar Cascades    |

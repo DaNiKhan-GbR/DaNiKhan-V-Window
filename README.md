@@ -18,7 +18,7 @@ You can find precompiled versions here...
 
 Very simple to use and so on ...
 
-Logigng defaults:
+Logging defaults:
 * Debug: Dnkvw = Verbose, Internal = Silent
 * Release: Dnkvw = Warning, internal = Silent
 
@@ -29,10 +29,14 @@ Logigng defaults:
 You need:
 * OpenCV >= 4.2.0
 * Cmake >= 3.5
+* Webcam with at least 640x480px @ 30 fps
+
+Tested on:
+* Windows 10
 
 For instructions how to build OpenCV look here: TODO
 
 ## License
 
 This project is licensed under the BSD 3-Clause License.
-See the [LICENSE](LICENSE) file for details
+See the [LICENSE](LICENSE) file for details.

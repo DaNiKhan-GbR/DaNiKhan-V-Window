@@ -136,9 +136,7 @@ namespace dnkvw {
 
     bool CDnkvwContext::startTracking(int cameraId)
     {
-        m_winCalc.start(cameraId);
-
-        return true; // TODO implement a correct success status
+        return m_winCalc.start(cameraId);
     }
 
     void CDnkvwContext::stopTracking()

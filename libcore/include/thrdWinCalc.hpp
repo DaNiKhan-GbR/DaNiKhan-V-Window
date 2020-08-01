@@ -43,6 +43,8 @@
 #include <thread>
 #include <atomic>
 #include <memory>
+#include <mutex>
+#include <condition_variable>
 #include <opencv2/opencv.hpp>
 
 #include "fpsTimer.hpp"
@@ -107,6 +109,7 @@ namespace dnkvw
                 initSettings.reseved1 = 0.0f;
                 m_settings = initSettings;
 
+                m_startupDone = false;
                 m_threadRunning = false;
                 m_signal_stop = false;
                 m_signal_calibrate = false;
@@ -121,8 +124,9 @@ namespace dnkvw
              * Start the tracking thread.
              * 
              * @param cameraId Id of the camera to use for tracking
+             * @return true if initialization was successful
              */
-            void start(int cameraId);
+            bool start(int cameraId);
             
             /**
              * Stop the tracking. This function may block.
@@ -206,6 +210,11 @@ namespace dnkvw
             bool initVideoCapture(int cameraId);
 
             /**
+             * Signal to the main thread that the startup is done.
+             */
+            void signalStartupDone();
+
+            /**
              * Entry point and main method for the tracking thread.
              * Handles the complete face tracking and window calculation process.
              * 
@@ -254,6 +263,22 @@ namespace dnkvw
              * The handle for the tracking thread.
              */
             std::thread m_thread;
+
+            /**
+             * This is a mutex for the startup variable.
+             */
+            std::mutex m_startupMutex;
+
+            /**
+             * This startup variable signals that the start is completed.
+             * It may have failed.
+             */
+            bool m_startupDone;
+
+            /**
+             * This conditional variable is used to check if the startup has finished yet.
+             */
+            std::condition_variable m_startupSignal;
             
             /**
              * Atomic for the last calculation result.

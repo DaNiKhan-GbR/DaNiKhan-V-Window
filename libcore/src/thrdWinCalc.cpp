@@ -56,17 +56,25 @@ namespace dnkvw {
         }
     }
 
-    void CThreadedWindowCalculator::start(int cameraId)
+    bool CThreadedWindowCalculator::start(int cameraId)
     {
         if (!m_threadRunning.load())
         {
             logger(ELog::VERBOSE) << "Starting tracking...";
             m_threadRunning = true;
             m_thread = std::thread([this, cameraId]{ this->processingLoop(cameraId); });
+
+            {
+                std::unique_lock<std::mutex> lock(m_startupMutex);
+                m_startupSignal.wait(lock, [this]{ return m_startupDone; });
+
+                return m_threadRunning.load();
+            }
         }
         else
         {
             logger(ELog::WARNING) << "Cannot start tracking. Tracking already active.";
+            return false;
         }
     }
 
@@ -263,15 +271,26 @@ namespace dnkvw {
         return success && m_videoCapture.isOpened();
     }
 
+    void CThreadedWindowCalculator::signalStartupDone()
+    {
+        {
+            std::lock_guard<std::mutex> lock(m_startupMutex);
+            m_startupDone = true;
+        }
+        m_startupSignal.notify_all();
+    }
+
     void CThreadedWindowCalculator::processingLoop(int cameraId)
     {
         // Init
         if (!initVideoCapture(cameraId))
         {
-            // TODO Signal failure to calling thread
             m_threadRunning = false;
+            signalStartupDone();
             return;
         }
+
+        signalStartupDone();
 
         logger(ELog::VERBOSE) << "Starting tracking... done";
 

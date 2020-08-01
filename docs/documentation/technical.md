@@ -95,7 +95,7 @@ there was only one object in frame, there would be a lot of jitter.
 | Correctly detects most faces  | Bad with occlusion  	                            |
 |                               | Bad when the face is not recorded from the front  |
 
-<br><br>
+<br>
 
 Overall, our observations were consistent with the conclusions that other teams had already made. 
 [An article](https://www.learnopencv.com/face-detection-opencv-dlib-and-deep-learning-c-python/) on 
@@ -115,7 +115,7 @@ superior choice for this project.
 | Works even under substantial occlusion    |                                       |
 | Detects faces across various distances    |                                       |
 
-<br><br>
+<br>
 
 The DNN based detector overcomes all the drawbacks of Haar cascade based detector, without compromising 
 on any benefit provided by Haar. We could not see any major drawback for this method except that it is 

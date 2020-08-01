@@ -120,7 +120,6 @@ namespace dnkvw {
             logger(ELog::ERROR) << "Couldn't initialise tracker!";
         }
         
-
         return false;
     }
 
@@ -310,6 +309,7 @@ namespace dnkvw {
         cv::Mat frame;
         std::vector<cv::Rect> faces;
 
+        // Collect a few frames with a face for calibration
         int tryCount = 0;
         while (faces.size() < constant::calib::targetFaceCount && tryCount < constant::calib::maxFaceTries)
         {
@@ -323,6 +323,7 @@ namespace dnkvw {
             }
         }
 
+        // Calculate the average face position and set it as the base/center position
         if (faces.size() >= constant::calib::targetFaceCount / 2)
         {
             Vec3 eyeAvg;
@@ -368,6 +369,10 @@ namespace dnkvw {
             constexpr float eyeAvgFactor = constant::frustum::eyeAvgFactor;
             m_eyeAvg = m_eyeAvg * (1.0f - eyeAvgFactor) + eye * eyeAvgFactor;
 
+            // The following algorithm is based on the paper Generalized Perspective 
+            // Projection by Robert Kooima
+            // https://csc.lsu.edu/~kooima/pdfs/gen-perspective.pdf
+
             Vec3 pa(-settings.aspect, -1, 0);
             Vec3 pb( settings.aspect, -1, 0);
             Vec3 pc(-settings.aspect,  1, 0);
@@ -388,6 +393,8 @@ namespace dnkvw {
             float r = (vr * vb) * nearOverD;
             float b = (vu * va) * nearOverD;
             float t = (vu * vc) * nearOverD;
+
+            // This is the end of the algorithm
 
             // Set result
             CWindowResult newResult;

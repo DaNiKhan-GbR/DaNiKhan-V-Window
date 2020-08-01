@@ -88,13 +88,13 @@ In our early tests we found it to sometimes produce false positives, identifying
 as faces. Other times it did not recognize faces that had even just a small part occluded. Even when 
 there was only one object in frame, there would be a lot of jitter.
 
-| Pros  	                    | Cons  	                                        |
+| **Pros** 	                    | **Cons**  	                                    |
 |---	                        |---	                                            |
 | Easy to implement  	        | Lots of false positives   	                    |
 | Works real-time  	            | Jittering, unstable tracking 	                    |
 | Correctly detects most faces  | Bad with occlusion  	                            |
 |                               | Bad when the face is not recorded from the front  |
-<br>
+<br><br>
 
 Overall, our observations were consistent with the conclusions that other teams had already made. 
 [An article](https://www.learnopencv.com/face-detection-opencv-dlib-and-deep-learning-c-python/) on 
@@ -106,14 +106,14 @@ implemented face detection. They enable a faster and more stable face detection 
 Haar Cascades. Since OpenCV also includes already pretrained models for DNNs, they were ultimately the 
 superior choice for this project.
 
-| Pros  	                                | Cons  	                            |
+| **Pros**  	                            | **Cons**  	                        |
 |---	                                    |---	                                |
 | Most accurate in our tests                | Works really slow in debug builds     | 
 | Runs at real-time on CPU                  | Slightly slower than Haar Cascades    |
 | Works for different face orientations     |                                       |
 | Works even under substantial occlusion    |                                       |
 | Detects faces across various distances    |                                       |
-<br>
+<br><br>
 
 The DNN based detector overcomes all the drawbacks of Haar cascade based detector, without compromising 
 on any benefit provided by Haar. We could not see any major drawback for this method except that it is 

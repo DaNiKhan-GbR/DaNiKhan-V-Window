@@ -1,6 +1,5 @@
 # DaNiKhan V-Window
-
-DaNiKhan Virtual Window
+DaNiKhan Virtual Window: A virtual window just using your webcam.
 
 ## Motiviation
 

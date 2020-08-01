@@ -25,7 +25,7 @@ TODO Screenshot
   <a href="#screenshots--demos">Screenshots & Demos</a> •
   <a href="#requirements">Requirements</a> •
   <a href="#installation">Installation</a> •
-  <a href="#documentation">Documentation</a> •
+  <a href="#documentation">Docs</a> •
   <a href="#building">Building</a> •
   <a href="#license">License</a>
 </p>

@@ -14,9 +14,22 @@ TODO Teaser Bild
     </a>
 </p>
 
+## About
+
+DaNiKhan Virtual Window is a library that allows the easy creation of virtual reality applications that don't require the user to own a headset or other specialized hardware. The resulting application takes the users head movement into account to create a depth effect. For this to work the user only needs a standard webcam.
+
+This library exposes an [C](https://danikhan-gbr.github.io/DaNiKhan-V-Window/TODO) 
+and an [C++](https://danikhan-gbr.github.io/DaNiKhan-V-Window/TODO) Interface.
+
 ## Motiviation
 
-TODO
+This project was initiated by the VR Project at the [FH Wedel](https://www.fh-wedel.de/).
+In 2007 Johnny Lee [demonstrated](https://youtu.be/Jd3-eiid-Uw) a functional prototype for a virtual window using a head mounted Wii remote sensor bar to track the user's head position.
+
+Since then there have been many attempts to recreate or improve upon his solution.
+
+This project aims to create a library enable an easier way to implement a similar virtual window 
+using a standard webcam.
 
 ## Requirements
 
@@ -28,21 +41,16 @@ You need:
 Tested on:
 * Windows 10
 
-## Installation
-
-You can find our installation instructions [here](installation/).
-
-## Documentation
-
-You can find our documentation [here](documentation/).
-
-## Demos
-
-TODO
-
 ## Bindings
 
-TODO
+Nothing to see here yet.
+
+## Links
+
+* [Installation Instructions](installation/)
+* [Documentation](documentation/)
+* [Screenshots & Demos](demos/)
+* [Build Instructions](building/)
 
 ## License
 

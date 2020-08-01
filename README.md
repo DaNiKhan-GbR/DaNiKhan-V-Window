@@ -22,11 +22,8 @@ TODO Screenshot
   <a href="#about">About</a> •
   <a href="#motiviation">Motiviation</a> •
   <a href="#usage">Usage</a> •
-  <a href="#screenshots--demos">Screenshots & Demos</a> •
   <a href="#requirements">Requirements</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#documentation">Docs</a> •
-  <a href="#building">Building</a> •
+  <a href="#links">Links</a> •
   <a href="#license">License</a>
 </p>
 
@@ -34,8 +31,8 @@ TODO Screenshot
 
 DaNiKhan Virtual Window is a library that allows the easy creation of virtual reality applications that don't require the user to own a headset or other specialized hardware. The resulting application takes the users head movement into account to create a depth effect. For this to work the user only needs a standard webcam.
 
-This library exposes an [C](https://danikhan-gbr.github.io/DaNiKhan-V-Window/TODO) 
-and an [C++](https://danikhan-gbr.github.io/DaNiKhan-V-Window/TODO) Interface.
+This library exposes a [C](https://danikhan-gbr.github.io/DaNiKhan-V-Window/documentation/c-api.html) 
+and a [C++](https://danikhan-gbr.github.io/DaNiKhan-V-Window/documentation/cpp-api.html) Interface.
 
 ## Motiviation
 
@@ -75,10 +72,6 @@ dnkvw_freeContext(&dnkvw);
 
 For more complete in-depth examples look at our [demos](https://danikhan-gbr.github.io/DaNiKhan-V-Window/demos/).
 
-## Screenshots & Demos
-
-You can find some usable demos and screenshots [here](https://danikhan-gbr.github.io/DaNiKhan-V-Window/demos/).
-
 ## Requirements
 
 You need:
@@ -89,18 +82,12 @@ You need:
 Tested on:
 * Windows 10
 
-## Installation
+## Links
 
-Precompiled binaries are available.
-You can find our installation instructions [here](https://danikhan-gbr.github.io/DaNiKhan-V-Window/installation/).
-
-## Documentation
-
-You can find the code documentation [here](https://danikhan-gbr.github.io/DaNiKhan-V-Window/documentation/).
-
-## Building
-
-You can find our build instructions [here](https://danikhan-gbr.github.io/DaNiKhan-V-Window/building/).
+* [Installation Instructions](https://danikhan-gbr.github.io/DaNiKhan-V-Window/installation/)
+* [Documentation](https://danikhan-gbr.github.io/DaNiKhan-V-Window/documentation/)
+* [Screenshots & Demos](https://danikhan-gbr.github.io/DaNiKhan-V-Window/demos/)
+* [Build Instructions](https://danikhan-gbr.github.io/DaNiKhan-V-Window/building/)
 
 ## License
 

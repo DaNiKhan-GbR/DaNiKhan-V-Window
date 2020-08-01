@@ -1,4 +1,4 @@
-# DaNiKhan V-Window
+# DaNiKhan V-Window (Dnkvw)
 DaNiKhan Virtual Window: A virtual window just using your webcam.
 
 TODO Screenshot
@@ -29,7 +29,7 @@ TODO Screenshot
 
 ## About
 
-DaNiKhan Virtual Window is a library that allows the easy creation of virtual reality applications that don't require the user to own a headset or other specialized hardware. The resulting application takes the users head movement into account to create a depth effect. For this to work the user only needs a standard webcam.
+DaNiKhan Virtual Window (Dnkvw) is a library that allows the easy creation of virtual reality applications that don't require the user to own a headset or other specialized hardware. The resulting application takes the users head movement into account to create a depth effect. For this to work the user only needs a standard webcam.
 
 This library exposes a [C](https://danikhan-gbr.github.io/DaNiKhan-V-Window/documentation/c-api.html) 
 and a [C++](https://danikhan-gbr.github.io/DaNiKhan-V-Window/documentation/cpp-api.html) Interface.

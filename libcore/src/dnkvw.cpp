@@ -71,14 +71,14 @@ extern "C" {
         context->setInternalLogLevel(internalLogLevel);
     }
 
-    DNKVW_API void dnkvw_selectHaarTracker(IDnkvwHandle context)
+    DNKVW_API int dnkvw_selectHaarTracker(IDnkvwHandle context)
     {
-        context->selectHaarTracker();
+        return context->selectHaarTracker() ? 1 : 0;
     }
 
-    DNKVW_API void dnkvw_selectDnnTracker(IDnkvwHandle context)
+    DNKVW_API int dnkvw_selectDnnTracker(IDnkvwHandle context)
     {
-        context->selectDnnTracker();
+        return context->selectDnnTracker() ? 1 : 0;
     }
 
     DNKVW_API int dnkvw_startTracking(IDnkvwHandle context, int cameraId)

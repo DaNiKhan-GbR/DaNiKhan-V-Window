@@ -129,7 +129,8 @@ namespace dnkvw
             bool start(int cameraId);
             
             /**
-             * Stop the tracking. This function may block.
+             * Stop the tracking. 
+             * This function may block.
              */
             void stop();
 

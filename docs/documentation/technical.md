@@ -126,7 +126,13 @@ While we decided to keep both face trackers in the library,
 the DNN tracker is greatly superior and should be preferred.
 
 ## Converting to Frustum
-In order to correctly infer the head position from the tracking data ... TODO
+In order to correctly infer the head position from the tracking data we determine the center of the users eyes 
+and convert the result to a space from -1 to 1. 
+
+The horizontal center is calculated by adding half the width to its starting point and the vertical center uses 
+a similar method but assumes that the eyes are approximately one quarter from the top edge of the tracked position. 
+The face width is then used to approximate the users distance from the monitor and the result applied 
+to the eye postion.
 
 The calculations to convert the head position to the corrected viewing frustum are based 
 on the paper [Generalized Perspective Projection](https://csc.lsu.edu/~kooima/pdfs/gen-perspective.pdf) 

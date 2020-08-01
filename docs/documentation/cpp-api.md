@@ -1,6 +1,206 @@
 # C++ API Documentation
 [Back to Documentation](index.md)
 
-Logging defaults:
-* Debug: Dnkvw = Verbose, Internal = Silent
-* Release: Dnkvw = Warning, internal = Silent
+This is the API Documentation for the C++ Interface of dnkvw.  
+`context` always to refers to a dnkvw context.
+
+<hr>
+
+```C++
+IDnkvwHandle dnkvw_createContext();
+```
+This method creates a new dnkvw context. 
+It is needed for all operations in this library. 
+Do not forget to free it after you are done with it.
+
+**Returns:**
+* the newly created context
+
+<hr>
+
+```C++
+void dnkvw_freeContext(IDnkvwHandle* context);
+```
+This method deinitializes and frees a dnkw context.
+If you use C++ NEVER use 'delete' to free an existing context.
+Only use this method to free a context.
+
+**Parameters:**
+* `context` a pointer to an initialized context
+
+<hr>
+
+```C++
+void context->setLogLevel(int logLevel);
+```
+Set the log level.
+
+**Parameters:**
+* `logLevel` the log level
+
+**Logging defaults:**
+* Debug: Dnkvw = Verbose
+* Release: Dnkvw = Warning
+
+<hr>
+
+```C++
+void context->setInternalLogLevel(int internalLogLevel);
+```
+Set the internal log level.
+Not intended for production use.
+ 
+**Parameters:**
+* `internalLogLevel` the log level
+
+**Logging defaults:**
+* Debug: Internal = Silent
+* Release: Internal = Silent
+
+<hr>
+
+```C++
+bool context->selectHaarTracker();
+```
+Use Haar tracking. 
+Overwrites previously selected tracker.
+
+**Returns:**
+* `true` if the selection was successful
+
+<hr>
+
+```C++
+bool context->selectDnnTracker();
+```
+Use DNN tracking. 
+Overwrites previously selected tracker.
+
+**Returns:**
+* `true` if the selection was successful
+
+<hr>
+
+```C++
+bool context->startTracking(int cameraId);
+```
+Starts the tracking.
+
+**Parameters:**
+* `cameraId` the Id of the camera to be uses for tracking
+
+**Returns:**
+* `true` if the tracking could be started successfully. 
+  A `false` value may indicate a problem with the camera.
+
+<hr>
+
+```C++
+void context->stopTracking();
+```
+Stops the tracking.
+This function may block.
+
+<hr>
+
+```C++
+void context->stopTrackingAsync();
+```
+Stops the tracking as soon as possible without blocking.
+
+<hr>
+
+```C++
+void context->configureFrustum(float aspectRatio, float nearPlane);
+```
+Configures the viewing frustum according to the parameters.
+
+**Parameters:**
+* `aspectRatio` the aspect ratio
+* `nearPlane` the near plane
+
+<hr>
+
+```C++
+void context->calibrate();
+```
+Runs a short calibration routine.
+The user should sit or stand as centered as possible before this
+function is called. The position of the user will be used as the new
+center until a new calibration is started.
+
+This method should be called shortly after the start of the tracking 
+to correct perspective problems caused by a wrong starting center.
+
+<hr>
+
+```C++
+void context->loadFrustum(float* left, float* right, float* top, float* bottom);
+```
+Get the last frustum.
+The viewing frustum is the volume that may appear on the screen.
+It is described by a near plane, a far plane and the distances of the
+left, right, top and bottom plane based on the near plane.
+This function returns only the left, right, top and bottom values.
+The near and far plane can be set independently.
+
+These values can be used to calculate the projection matrix. This is normaly
+done by your 3D graphics framework. Look at our demos for some case specific
+examples.
+
+For more information see 
+[https://en.wikipedia.org/wiki/Viewing_frustum](https://en.wikipedia.org/wiki/Viewing_frustum)
+
+**Parameters:**
+* `left` a pointer to a float where the left result can be saved
+* `right` a pointer to a float where the right result can be saved
+* `top` a pointer to a float where the top result can be saved
+* `bottom` a pointer to a float where the bottom result can be saved
+
+<hr>
+
+```C++
+void context->loadEyeOffset(float* x, float* y, float* z);
+```
+Get the last calculated eye offset.
+
+**Parameters:**
+* `x` a pointer to a float where the X result can be saved
+* `y` a pointer to a float where the Y result can be saved
+* `z` a pointer to a float where the Z result can be saved
+
+<hr>
+
+```C++
+void context->loadFps(float* fps);
+```
+Get the last FPS value.
+
+**Parameters:**
+* `fps` a pointer to a float where the result can be saved
+
+<hr>
+
+```C++
+void context->debugCameraInput(int cameraId);
+```
+Debugging function to test the camera input. 
+Should not be called while the tracking thread is running.
+This function may block.
+Don't use this in production code.
+
+**Parameters:**
+* `cameraId` Id of the camera to use for tracking
+
+<hr>
+
+```C++
+void context->debugCameraFace(int cameraId);
+```
+Debugging function to test the face detection. 
+Should not be called while the tracking thread is running.
+This function may block.  
+Don't use this in production code.
+
+**Parameters:**
+* `cameraId` Id of the camera to use for tracking

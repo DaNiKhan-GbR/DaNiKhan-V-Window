@@ -2,6 +2,18 @@
 
 TODO Teaser Bild
 
+<p align="center">
+    <a href="https://github.com/DaNiKhan-GbR/DaNiKhan-V-Window/issues">
+        <img src="https://img.shields.io/github/issues/DaNiKhan-GbR/DaNiKhan-V-Window" alt="Issues"/>
+    </a>
+    <a href="https://github.com/DaNiKhan-GbR/DaNiKhan-V-Window/pulls">
+        <img src="https://img.shields.io/github/issues-pr/DaNiKhan-GbR/DaNiKhan-V-Window" alt="PRs"/>
+    </a>
+    <a href="https://github.com/DaNiKhan-GbR/DaNiKhan-V-Window/blob/master/LICENSE">
+        <img src="https://img.shields.io/github/license/DaNiKhan-GbR/DaNiKhan-V-Window?color=blue" alt="License"/>
+    </a>
+</p>
+
 ## Motiviation
 
 TODO

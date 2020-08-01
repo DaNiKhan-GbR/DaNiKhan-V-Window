@@ -91,6 +91,11 @@ extern "C" {
         context->stopTracking();
     }
 
+    DNKVW_API void dnkvw_stopTrackingAsync(IDnkvwHandle context)
+    {
+        context->stopTrackingAsync();
+    }
+
     DNKVW_API void dnkvw_configureFrustum(IDnkvwHandle context, float aspectRatio, float nearPlane)
     {
         context->configureFrustum(aspectRatio, nearPlane);

@@ -111,5 +111,55 @@ namespace dnkvw
              */
             constexpr int maxFaceTries = 50;
         }
+
+        /**
+         * Constants specific to the Haar Cascade Tracker
+         */
+        namespace haartracker
+        {
+            /**
+             * Determines the step size at which the ímage is scaled for the face tracking.
+             */
+            constexpr float scaleFactor = 1.3f;
+
+            /**
+             * Minimum possible size for an object to be detected.
+             */
+            constexpr int minSize = 100;
+        }
+
+        /**
+         * Constants specific to the DNN Tracker
+         */
+        namespace dnntracker
+        {
+            /**
+             * The size of the image that is expected by the neural network.
+             */
+            constexpr int imgSize = 300;
+
+            /**
+             * Color mean value for the red channel. This value is required to adapt the image 
+             * to the same color space that the network was trained in.
+             */
+            constexpr float colorMeanR = 104.0;
+
+            /**
+             * Color mean value for the green channel. This value is required to adapt the image 
+             * to the same color space that the network was trained in.
+             */
+            constexpr float colorMeanG = 177.0;
+
+            /**
+             * Color mean value for the blue channel. This value is required to adapt the image 
+             * to the same color space that the network was trained in.
+             */
+            constexpr float colorMeanB = 123.0;
+
+            /**
+             * Minimum required confidence for a result to be accepted.
+             */
+            constexpr float confidence_threshold = 0.7f;
+        }
     }
 }

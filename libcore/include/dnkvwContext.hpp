@@ -70,6 +70,7 @@ namespace dnkvw
 
             bool startTracking(int cameraId);
             void stopTracking();
+            void stopTrackingAsync();
 
             void configureFrustum(float aspectRatio, float nearPlane);
             void calibrate();

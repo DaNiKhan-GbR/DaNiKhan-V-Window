@@ -44,6 +44,7 @@
 
 #include "resources.hpp"
 #include "logger.hpp"
+#include "constants.hpp"
 
 namespace dnkvw {
 
@@ -67,10 +68,19 @@ namespace dnkvw {
     std::optional<cv::Rect> CHaarTracker::trackFrame(cv::Mat& inputFrame)
     {
         std::vector<cv::Rect> faces;
-        // TODO: Constant values as settings or real constants. No magic numbers.
-        m_faceCascade.detectMultiScale(inputFrame, faces, 1.3f, 3, 0, cv::Size(100, 100));
+        
+        m_faceCascade.detectMultiScale(
+            inputFrame, 
+            faces, 
+            constant::haartracker::scaleFactor, 
+            3, // default value for minNeighbours 
+            0, // no flags 
+            cv::Size(
+                constant::haartracker::minSize, 
+                constant::haartracker::minSize
+            )
+        );
 
-        // TODO: Select most likely face
         if (faces.size() > 0)
         {
             return std::optional<cv::Rect>(faces[0]);

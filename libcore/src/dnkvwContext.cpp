@@ -143,8 +143,12 @@ namespace dnkvw {
 
     void CDnkvwContext::stopTracking()
     {
-        // TODO Async or not? Maybe let the application decide?
         m_winCalc.stop();
+    }
+
+    void CDnkvwContext::stopTrackingAsync()
+    {
+        m_winCalc.stopAsync();
     }
 
     void CDnkvwContext::configureFrustum(float aspectRatio, float nearPlane)

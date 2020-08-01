@@ -213,7 +213,6 @@ namespace dnkvw {
 
     void CThreadedWindowCalculator::faceToEye(const cv::Rect& face, const float frameWidth, const float frameHeight, Vec3& eye)
     {
-        // TODO too hard for an good approx.
         eye[0] = ((float)(face.x + face.width / 2.0f)) / frameWidth * 2.0f - 1.0f;
         eye[1] = ((float)(face.y + face.height / 4.0f)) / frameHeight * 2.0f - 1.0f; 
         eye[2] = 100.0f / (float)face.width;
@@ -338,7 +337,7 @@ namespace dnkvw {
             eyeAvg /= (float) faces.size();
             
             m_eyeOffset = -eyeAvg;
-            m_eyeOffset[2] = eyeAvg[2]; // TODO Mal schauen, aber richtig hart
+            m_eyeOffset[2] = eyeAvg[2];
         }
 
         logger(ELog::VERBOSE) << "Calibration... done";
@@ -398,7 +397,7 @@ namespace dnkvw {
 
             // Set result
             CWindowResult newResult;
-            newResult.fps = m_fpsTimer.stop(); // TODO Capture fps for frame dropping / automatic quality adjustments
+            newResult.fps = m_fpsTimer.stop();
             newResult.left = l;
             newResult.right = r;
             newResult.bottom = b;

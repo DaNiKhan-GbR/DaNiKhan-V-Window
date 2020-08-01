@@ -44,6 +44,7 @@
 
 #include "resources.hpp"
 #include "logger.hpp"
+#include "constants.hpp"
 
 namespace dnkvw {
 
@@ -69,8 +70,22 @@ namespace dnkvw {
     {
         std::vector<cv::Rect> faces;
 
-        // TODO: Constant values as settings or real constants. No magic numbers.
-        cv::Mat inputBlob = cv::dnn::blobFromImage(inputFrame, 1.0, cv::Size(300, 300), cv::Scalar(104.0, 177.0, 123.0), false, false);
+        cv::Mat inputBlob = cv::dnn::blobFromImage(
+            inputFrame, 
+            1.0, // scale factor
+            cv::Size(
+                constant::dnntracker::imgSize, 
+                constant::dnntracker::imgSize
+            ), 
+            cv::Scalar(
+                constant::dnntracker::colorMeanR,
+                constant::dnntracker::colorMeanG,
+                constant::dnntracker::colorMeanB
+            ), 
+            false, // don't swap r and b channel
+            false  // don't crop the image
+        );
+
         m_dnnNet.setInput(inputBlob, "data");
         cv::Mat detection = m_dnnNet.forward("detection_out");
         cv::Mat detectionMat(detection.size[2], detection.size[3], CV_32F, detection.ptr<float>());
@@ -79,7 +94,7 @@ namespace dnkvw {
         {
             float confidence = detectionMat.at<float>(i, 2);
 
-            if (confidence > 0.7f) // TODO: confidence_threshold
+            if (confidence > constant::dnntracker::confidence_threshold)
             {
                 int x1 = static_cast<int>(detectionMat.at<float>(i, 3) * inputFrame.cols);
                 int y1 = static_cast<int>(detectionMat.at<float>(i, 4) * inputFrame.rows);
@@ -90,7 +105,6 @@ namespace dnkvw {
             }
         }
 
-        // TODO: Select most likely face
         if (faces.size() > 0)
         {
             return std::optional<cv::Rect>(faces[0]);

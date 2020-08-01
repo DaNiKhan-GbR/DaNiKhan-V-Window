@@ -67,6 +67,7 @@ struct IDnkvwContext
 
     virtual bool startTracking(int cameraId) = 0;
     virtual void stopTracking() = 0;
+    virtual void stopTrackingAsync() = 0;
 
     virtual void configureFrustum(float aspectRatio, float nearPlane) = 0;
     virtual void calibrate() = 0;

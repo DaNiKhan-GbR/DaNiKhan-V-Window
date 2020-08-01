@@ -73,6 +73,7 @@ extern "C" {
 
     DNKVW_API int dnkvw_startTracking(IDnkvwHandle context, int cameraId);
     DNKVW_API void dnkvw_stopTracking(IDnkvwHandle context);
+    DNKVW_API void dnkvw_stopTrackingAsync(IDnkvwHandle context);
 
     DNKVW_API void dnkvw_configureFrustum(IDnkvwHandle context, float aspectRatio, float nearPlane);
     DNKVW_API void dnkvw_calibrate(IDnkvwHandle context);

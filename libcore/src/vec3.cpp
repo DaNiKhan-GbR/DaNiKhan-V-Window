@@ -139,7 +139,7 @@ namespace dnkvw {
     float Vec3::length()
     {
         // Pythagoras
-        return std::sqrtf(m_values[0] * m_values[0] + m_values[1] * m_values[1] + m_values[2] * m_values[2]);
+        return sqrtf(m_values[0] * m_values[0] + m_values[1] * m_values[1] + m_values[2] * m_values[2]);
     }
 
     Vec3 Vec3::norm()

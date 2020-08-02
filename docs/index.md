@@ -3,6 +3,9 @@
 TODO Teaser Bild
 
 <p align="center">
+    <a href="https://github.com/DaNiKhan-GbR/DaNiKhan-V-Window/actions">
+        <img src="https://img.shields.io/github/workflow/status/DaNiKhan-GbR/DaNiKhan-V-Window/CD%20-%20Release" alt="Build"/>
+    </a>
     <a href="https://github.com/DaNiKhan-GbR/DaNiKhan-V-Window/issues">
         <img src="https://img.shields.io/github/issues/DaNiKhan-GbR/DaNiKhan-V-Window" alt="Issues"/>
     </a>

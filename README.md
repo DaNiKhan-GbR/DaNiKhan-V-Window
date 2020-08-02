@@ -7,6 +7,9 @@ TODO Screenshot
     <a href="https://danikhan-gbr.github.io/DaNiKhan-V-Window/">
         <img src="https://img.shields.io/badge/-Homepage-informational" alt="Homepage"/>
     </a>
+    <a href="https://github.com/DaNiKhan-GbR/DaNiKhan-V-Window/actions">
+        <img src="https://img.shields.io/github/workflow/status/DaNiKhan-GbR/DaNiKhan-V-Window/CD%20-%20Release" alt="Build"/>
+    </a>
     <a href="https://github.com/DaNiKhan-GbR/DaNiKhan-V-Window/issues">
         <img src="https://img.shields.io/github/issues/DaNiKhan-GbR/DaNiKhan-V-Window" alt="Issues"/>
     </a>

@@ -208,7 +208,6 @@ jobs:
       run: ${{ steps.cmake_and_ninja.outputs.cmake_dir }}/cmake -E tar cfv ../${{ matrix.config.artifact }} --format=zip .
 
     - name: Upload Release Asset
-        id: upload-release-asset 
         uses: actions/upload-release-asset@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

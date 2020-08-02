@@ -5,8 +5,8 @@ name: CD - Release
 on:
   release:
     types: [published]
-  push:
-    branches: [master]
+#  push:
+#    branches: [master]
 
 env:
   CMAKE_VERSION: 3.17.0

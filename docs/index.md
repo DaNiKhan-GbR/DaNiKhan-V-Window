@@ -1,7 +1,7 @@
 # Home
 
 <p align="center">
-    <img width=90% src="">
+    <img width=100% src="https://raw.githubusercontent.com/DaNiKhan-GbR/DaNiKhan-V-Window/master/docs/teaser.jpg">
 </p>
 
 <p align="center">
@@ -54,7 +54,7 @@ Nothing to see here yet.
 
 * [Installation Instructions](installation/)
 * [Documentation](documentation/)
-* [Screenshots & Demos](demos/)
+* [Images & Demos](demos/)
 * [Build Instructions](building/)
 
 ## License

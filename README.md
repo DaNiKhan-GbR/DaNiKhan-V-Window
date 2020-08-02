@@ -1,7 +1,9 @@
 # DaNiKhan V-Window (Dnkvw)
 DaNiKhan Virtual Window: A virtual window just using your webcam.
 
-TODO Screenshot
+<p align="center">
+    <img width=100% src="https://raw.githubusercontent.com/DaNiKhan-GbR/DaNiKhan-V-Window/master/docs/teaser.jpg">
+</p>
 
 <p align="center">
     <a href="https://danikhan-gbr.github.io/DaNiKhan-V-Window/">
@@ -89,7 +91,7 @@ Tested on:
 
 * [Installation Instructions](https://danikhan-gbr.github.io/DaNiKhan-V-Window/installation/)
 * [Documentation](https://danikhan-gbr.github.io/DaNiKhan-V-Window/documentation/)
-* [Screenshots & Demos](https://danikhan-gbr.github.io/DaNiKhan-V-Window/demos/)
+* [Images & Demos](https://danikhan-gbr.github.io/DaNiKhan-V-Window/demos/)
 * [Build Instructions](https://danikhan-gbr.github.io/DaNiKhan-V-Window/building/)
 
 ## License

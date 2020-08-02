@@ -5,6 +5,7 @@
 These demos are usable examples of dnkvw. You can use them as a starting point for the usage of dnkvw.
 
 * [Dnkvw Raylib Example](https://github.com/DaNiKhan-GbR/Dnkvw-Raylib-Example) • [Download](https://github.com/DaNiKhan-GbR/Dnkvw-Raylib-Example/releases)
+* [Dnkvw Unity Plugin](https://github.com/DaNiKhan-GbR/Dnkvw-Unity-Plugin) • [Download](https://github.com/DaNiKhan-GbR/Dnkvw-Unity-Plugin/releases)
 
 ## Templates
 You can use templates to start your own project based on Dnkvw and other libraries.

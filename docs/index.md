@@ -34,6 +34,32 @@ Since then there have been many attempts to recreate or improve upon his solutio
 This project aims to create a library enable an easier way to implement a similar virtual window 
 using a standard webcam.
 
+## Usage
+
+DaNiKhan V-Window offers a simple API to implement a virtual window using regular off the shelf consumer hardware.
+
+Minimal C Usage:
+```C
+// Step 1: Include our library
+#include <dnkvw/dnkvw.h>
+
+// Step 2: create and configure a new dnkvw context
+IDnkvwHandle dnkvw = dnkvw_createContext();
+dnkvw_selectDnnTracker(dnkvw);
+dnkvw_configureFrustum(dnkvw, windowWidth / (float)windowHeight, nearPlane);
+
+// Step 3: start tracking
+dnkvw_startTracking(dnkvw, cameraId);
+
+// Step 4: read values
+dnkvw_loadEyeOffset(dnkvw, &eyeOffset.x, &eyeOffset.y, &eyeOffset.z);
+dnkvw_loadFrustum(dnkvw, &left, &right, &top, &bottom);
+
+// Step 5: stop & cleanup
+dnkvw_stopTracking(dnkvw);
+dnkvw_freeContext(&dnkvw);
+```
+
 ## Requirements
 
 You need:
@@ -43,10 +69,6 @@ You need:
 
 Tested on:
 * Windows 10
-
-## Bindings
-
-Nothing to see here yet.
 
 ## Links
 

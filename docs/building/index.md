@@ -29,11 +29,12 @@ dani@khan:~ git clone https://github.com/opencv/opencv.git
 dani@khan:~ cd opencv
 dani@khan:opencv$ mkdir build
 dani@khan:opencv$ cd build
-dani@khan:opencv/build$ cmake .. -D BUILD_SHARED_LIBS=OFF -D CMAKE_INSTALL_PREFIX=./install TODO CONTRIB?
+dani@khan:opencv/build$ mkdir install
+dani@khan:opencv/build$ cmake -D BUILD_SHARED_LIBS=OFF -D CMAKE_INSTALL_PREFIX=./install TODO CONTRIB? ..
 <CMAKE CONFIGURE OUTPUT HERE>
-dani@khan:build$ make
+dani@khan::opencv/build$ make
 <MAKE COMPILE OUTPUT HERE>
-dani@khan:build$ make install
+dani@khan::opencv/build$ make install
 <MAKE INSTALL OUTPUT HERE>
 ```
 
@@ -48,12 +49,12 @@ In our case on Windows 10 the required path for OpenCV_DIR was `<INSTALL_DIR>/x6
 dani@khan:~$ git clone https://github.com/DaNiKhan-GbR/DaNiKhan-V-Window.git dnkvw
 dani@khan:~$ cd dnkvw
 dani@khan:dnkvw$ mkdir build
-dani@khan:build$ cd build
-dani@khan:build$ cmake .. -D OpenCV_DIR=<OPENCV DIRECTORY>
+dani@khan:dnkvw/build$ cd build
+dani@khan:dnkvw/build$ cmake -D OpenCV_DIR=<OPENCV DIRECTORY> ..
 <CMAKE CONFIGURE OUTPUT HERE>
-dani@khan:build$ make
+dani@khan:dnkvw/build$ make
 <MAKE COMPILE OUTPUT HERE>
 # If you want to deploy it, also use this
-dani@khan:build$ make install
+dani@khan:dnkvw/build$ make install
 <MAKE INSTALL OUTPUT HERE>
 ```

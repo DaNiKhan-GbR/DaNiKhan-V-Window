@@ -62,6 +62,15 @@ set_package_properties(OpenCV PROPERTIES
     PURPOSE "Required for all image processing and video capturing tasks."
 )
 
+if(UNIX)
+    # Find libatomic 
+    find_library(Atomic_LIBRARY NAMES libatomic.a REQUIRED)
+    set_package_properties(Atomic_LIBRARY PROPERTIES
+        TYPE REQUIRED
+        PURPOSE "Required for atomic datatypes that are not handled by the hardware."
+    )
+endif()
+
 # Begin of RPath Helper
 
 # Always full RPATH (for shared libraries)

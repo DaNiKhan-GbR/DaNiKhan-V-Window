@@ -1,6 +1,8 @@
 # Home
 
-TODO Teaser Bild
+<p align="center">
+    <img width=90% src="">
+</p>
 
 <p align="center">
     <a href="https://github.com/DaNiKhan-GbR/DaNiKhan-V-Window/actions">

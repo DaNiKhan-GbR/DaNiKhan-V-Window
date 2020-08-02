@@ -97,6 +97,11 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 # Link with all required libraries.
 target_link_libraries(${PROJECT_NAME} PRIVATE ${CMAKE_THREAD_LIBS_INIT} ${OpenCV_LIBS} dnkvw::rc)
 
+# Link with libatomic on linux
+if(UNIX)
+    target_link_libraries(${PROJECT_NAME} PRIVATE Atomic_LIBRARY)
+endif()
+
 # Note: Its required that the /MT /MD /MTd /MDd setting is the same for all
 #       software components in an Windows application.
 #       Maybe an cmake option for this would be nice.

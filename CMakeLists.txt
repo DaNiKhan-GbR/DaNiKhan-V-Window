@@ -55,6 +55,7 @@ set_package_properties(Threads PROPERTIES
 )
 
 # Find OpenCV 4.2 package.
+option(OpenCV_STATIC "Use static OpenCV" ON)
 find_package(OpenCV 4.2 REQUIRED)
 set_package_properties(OpenCV PROPERTIES
     URL "https://opencv.org/"

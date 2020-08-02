@@ -42,8 +42,6 @@ dani@khan::opencv/build$ make install
 
 If you haven't installed OpenCV globally, you need to set the 
 OpenCV_DIR option to the installation path.
-The installation path *may not* be the path you chose but some subdirectory of it.  
-In our case on Windows 10 the required path for OpenCV_DIR was `<INSTALL_DIR>/x64/vc16/lib`.
 
 ```console
 dani@khan:~$ git clone https://github.com/DaNiKhan-GbR/DaNiKhan-V-Window.git dnkvw

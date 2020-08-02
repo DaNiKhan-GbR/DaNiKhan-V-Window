@@ -13,9 +13,7 @@ You can use templates to start your own project based on Dnkvw and other librari
 
 ## Images
 
-<p align="center">
-    <img width=100% src="https://raw.githubusercontent.com/DaNiKhan-GbR/DaNiKhan-V-Window/master/docs/teaser.jpg">
-</p>
+![Teaser](../teaser.jpg)
 
 ![Image 1](dnkvw1.jpg)
 

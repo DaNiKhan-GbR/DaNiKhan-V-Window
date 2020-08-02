@@ -1,8 +1,6 @@
 # Home
 
-<p align="center">
-    <img width=100% src="https://raw.githubusercontent.com/DaNiKhan-GbR/DaNiKhan-V-Window/master/docs/teaser.jpg">
-</p>
+![Teaser](teaser.jpg)
 
 <p align="center">
     <a href="https://github.com/DaNiKhan-GbR/DaNiKhan-V-Window/actions">

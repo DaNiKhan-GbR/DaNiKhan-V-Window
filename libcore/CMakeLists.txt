@@ -97,11 +97,6 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 # Link with all required libraries.
 target_link_libraries(${PROJECT_NAME} PRIVATE ${CMAKE_THREAD_LIBS_INIT} ${OpenCV_LIBS} dnkvw::rc)
 
-# Note: Its required that the /MT /MD /MTd /MDd setting is the same for all
-#       software components in an Windows application.
-#       Maybe an cmake option for this would be nice.
-# set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
-
 # Set the export define.
 target_compile_definitions(${PROJECT_NAME} PRIVATE DNKVW_WIN_EXPORT)
 

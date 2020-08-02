@@ -63,11 +63,11 @@ set_package_properties(OpenCV PROPERTIES
     PURPOSE "Required for all image processing and video capturing tasks."
 )
 
-if(WIN32)
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     # Note: Its required that the /MT /MD /MTd /MDd setting is the same for all
     #       software components in an Windows application.
     #       Maybe an cmake option for this would be nice.
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
 endif()
 
 # Begin of RPath Helper

@@ -30,7 +30,7 @@ dani@khan:~$ cd opencv
 dani@khan:opencv$ mkdir build
 dani@khan:opencv$ cd build
 dani@khan:opencv/build$ mkdir install
-dani@khan:opencv/build$ cmake -D BUILD_SHARED_LIBS=OFF -D CMAKE_INSTALL_PREFIX=./install TODO CONTRIB? ..
+dani@khan:opencv/build$ cmake -D BUILD_SHARED_LIBS=OFF -D CMAKE_INSTALL_PREFIX=./install ..
 <CMAKE CONFIGURE OUTPUT HERE>
 dani@khan::opencv/build$ make
 <MAKE COMPILE OUTPUT HERE>

@@ -89,6 +89,7 @@ jobs:
         set(ENV{CC} ${{ matrix.config.cc }})
         set(ENV{CXX} ${{ matrix.config.cxx }})
         set(opencv_version $ENV{OPENCV_VERSION})
+        message(STATUS "Step 1")
         if ("${{ runner.os }}" STREQUAL "Windows" AND NOT "x${{ matrix.config.environment_script }}" STREQUAL "x")
           execute_process(
             COMMAND "${{ matrix.config.environment_script }}" && set
@@ -101,12 +102,15 @@ jobs:
             endif()
           endforeach()
         endif()
+        message(STATUS "Step 2")
         set(opencv_url "https://github.com/opencv/opencv/archive/${opencv_version}.zip")
         file(DOWNLOAD "${opencv_url}" ./opencv.zip SHOW_PROGRESS)
         execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./opencv.zip)
+        message(STATUS "Step 3")
         set(opencv_contrib_url https://github.com/opencv/opencv_contrib/archive/${opencv_version}.zip")
         file(DOWNLOAD "${opencv_contrib_url}" ./opencv_contrib.zip SHOW_PROGRESS)
         execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./opencv_contrib.zip)
+        message(STATUS "Step 4")
         execute_process(
           COMMAND ${{ steps.cmake_and_ninja.outputs.cmake_dir }}/cmake
             -S ./opencv
@@ -118,6 +122,7 @@ jobs:
             -D BUILD_JAVA=OFF
           RESULT_VARIABLE result
         )
+        message(STATUS "Step 5")
         if (NOT result EQUAL 0)
           message(FATAL_ERROR "Bad exit status")
         endif()

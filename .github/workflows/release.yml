@@ -5,8 +5,8 @@ name: CD - Release
 on:
   release:
     types: [published]
-#  push:
-#    branches: [master]
+  push:
+    branches: [master]
 
 env:
   CMAKE_VERSION: 3.17.0
@@ -22,27 +22,27 @@ jobs:
       fail-fast: false
       matrix:
         config:
-#        - {
-#            name: "Windows Latest MSVC", artifact: "Dnkvw-Windows-MSVC.zip",
-#            os: windows-latest,
-#            cc: "cl", cxx: "cl",
-#            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
-#          }
-#        - {
-#            name: "Windows Latest MinGW", artifact: "Dnkvw-Windows-MinGW.zip",
-#            os: windows-latest,
-#            cc: "gcc", cxx: "g++"
-#          }
         - {
-            name: "Ubuntu Latest GCC", artifact: "Dnkvw-Linux.zip",
-            os: ubuntu-latest,
+            name: "Windows Latest MSVC", artifact: "Dnkvw-Windows-MSVC.zip",
+            os: windows-latest,
+            cc: "cl", cxx: "cl",
+            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
+          }
+        - {
+            name: "Windows Latest MinGW", artifact: "Dnkvw-Windows-MinGW.zip",
+            os: windows-latest,
             cc: "gcc", cxx: "g++"
           }
 #        - {
-#            name: "macOS Latest Clang", artifact: "Dnkvw-macOS.zip",
-#            os: macos-latest,
-#            cc: "clang", cxx: "clang++"
+#            name: "Ubuntu Latest GCC", artifact: "Dnkvw-Linux.zip",
+#            os: ubuntu-latest,
+#            cc: "gcc", cxx: "g++"
 #          }
+        - {
+            name: "macOS Latest Clang", artifact: "Dnkvw-macOS.zip",
+            os: macos-latest,
+            cc: "clang", cxx: "clang++"
+          }
 
     steps:
     - uses: actions/checkout@v1

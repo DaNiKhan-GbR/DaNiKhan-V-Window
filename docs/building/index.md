@@ -25,8 +25,8 @@ can be advantageous.
 Using a shared dependency can also make sense if you are absolutely certain that a compatible version OpenCV will be installed on the target machine and want to save storage space.
 
 ```console
-dani@khan:~ git clone https://github.com/opencv/opencv.git
-dani@khan:~ cd opencv
+dani@khan:~$ git clone https://github.com/opencv/opencv.git
+dani@khan:~$ cd opencv
 dani@khan:opencv$ mkdir build
 dani@khan:opencv$ cd build
 dani@khan:opencv/build$ mkdir install
@@ -42,7 +42,7 @@ dani@khan::opencv/build$ make install
 
 If you haven't installed OpenCV globally, you need to set the 
 OpenCV_DIR option to the installation path.
-The installation path *may not* be the path you chose but some subdirectory of it.
+The installation path *may not* be the path you chose but some subdirectory of it.  
 In our case on Windows 10 the required path for OpenCV_DIR was `<INSTALL_DIR>/x64/vc16/lib`.
 
 ```console

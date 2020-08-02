@@ -1,7 +1,7 @@
 # Installation instructions
 [Back to home](../)
 
-While you can [build](../build) Dnkvw yourself it is recommended to install the precompiled
+While you can [build](../building/) Dnkvw yourself it is recommended to install the precompiled
 binaries. This article describes how you can do that. Note that these precompiled binaries
 come with all required dependencies. No further work required.
 

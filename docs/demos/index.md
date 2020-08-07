@@ -16,7 +16,16 @@ You can use templates to start your own project based on Dnkvw and other librari
 
 ![Teaser](../teaser.jpg)
 
-<iframe width="100%" src="https://www.youtube-nocookie.com/embed/j2izIeZ40t4?rel=0&showinfo=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p align="center">
+    <iframe 
+        width="90%"
+        height="315"
+        src="https://www.youtube-nocookie.com/embed/j2izIeZ40t4?rel=0&showinfo=0" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen
+    ></iframe>
+</p>
 
 ![Image 1](dnkvw1.jpg)
 

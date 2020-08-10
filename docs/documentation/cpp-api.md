@@ -144,7 +144,7 @@ left, right, top and bottom plane based on the near plane.
 This function returns only the left, right, top and bottom values.
 The near and far plane can be set independently.
 
-These values can be used to calculate the projection matrix. This is normaly
+These values can be used to calculate the projection matrix. This is normally
 done by your 3D graphics framework. Look at our demos for some case specific
 examples.
 

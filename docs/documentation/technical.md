@@ -137,6 +137,32 @@ to the eye postion.
 The calculations to convert the head position to the corrected viewing frustum are based 
 on the paper [Generalized Perspective Projection](https://csc.lsu.edu/~kooima/pdfs/gen-perspective.pdf) 
 by Robert Kooima.
+As we already know the eye position(`pe`) we first define the monitor by its three corners bottom left(`pa`), 
+bottom right(`pb`) and top left(`pc`). 
+```C++    
+// determine the orthonormal basis for the screen
+Vec3 vr = (pb - pa).norm();
+Vec3 vu = (pc - pa).norm();
+Vec3 vn = vr.cross(vu).norm();
+
+// determine vectors from the eye to the screen corners
+Vec3 va = pa - pe;
+Vec3 vb = pb - pe;
+Vec3 vc = pc - pe;
+
+// determine the distance from eye to screen and divide the near plane by the result
+// note that * denotes vector dot product
+float d = -(vn * va);
+float nearOverD = settings.near / d;
+
+// determine the frustum parameters
+float l = (vr * va) * nearOverD;
+float r = (vr * vb) * nearOverD;
+float b = (vu * va) * nearOverD;
+float t = (vu * vc) * nearOverD;
+```
+
+For a deeper explanation with illustrations it is recommended to read the referenced paper.
 
 ## Multithreading
 Because our library is intened for use in 3D graphics software, we wanted to reduce the CPU

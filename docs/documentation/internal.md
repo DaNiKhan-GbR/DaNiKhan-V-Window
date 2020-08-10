@@ -38,4 +38,4 @@ Provides simple logging utilities.
 Provides a simple frames per second timer.
 
 ## vec3.hpp
-Provides an easy way to represent vectors and several functions to aid with vecor calculations.
+Provides an easy way to represent vectors and several functions to aid with vector calculations.
